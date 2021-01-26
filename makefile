@@ -1,5 +1,5 @@
 # variable
-OBJECTS = lex.yy.o errormsg.o util.o
+OBJECTS = lex.yy.o errormsg.o ./util/util.o
 
 # executable
 all: lextest
@@ -9,14 +9,14 @@ lextest: lextest.o $(OBJECTS)
 	cc -g -o $@ lextest.o $(OBJECTS)
 
 # objects
-lextest.o: lextest.c tokens.h errormsg.h util.h
-lex.yy.o: lex.yy.c tokens.h errormsg.h util.h
-errormsg.o: errormsg.c errormsg.h util.h
-util.o: util.c util.h
+lextest.o: lextest.c tokens.h errormsg.h ./util/util.h
+lex.yy.o: lex.yy.c tokens.h errormsg.h ./util/util.h
+errormsg.o: errormsg.c errormsg.h ./util/util.h
+util.o: ./util/util.c ./util/util.h
 
 # lex
-lex.yy.c: tiger.lex
-	lex tiger.lex
+lex.yy.c: ./scanner/tiger.lex
+	lex ./scanner/tiger.lex
 
 
 .PHONY: clean
