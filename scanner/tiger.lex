@@ -112,6 +112,13 @@ void adjust(void) {
                       append_to_buffer(tmp);
                       }
 <INSTRING>\\[0-9]+ {adjust(); EM_error(EM_tokPos,"bad escape sequence"); yyterminate();}
+<INSTRING>\\n {adjust(); append_to_buffer('\n');}
+<INSTRING>\\t {adjust(); append_to_buffer('\t');}
+<INSTRING>\\\\ {adjust(); append_to_buffer('\\');}
+<INSTRING>\\\" {adjust(); append_to_buffer('\"');}
+<INSTRING>\^[@A-Z\[\\\]\^_?] {adjust(); append_to_buffer(yytext[1]-'a');}
+<INSTRING>\\[ \n\t\f]+\\ {adjust(); int i; for(i = 0; yytext[i]; ++i) if(yytext[i] == '\n') EM_newline(); continue;}
+<INSTRING>[^\\\n\"]* {adjust(); char *tmp = yytext; while(*tmp) append_to_buffer(*tmp++);}
 
   /* integer literal */
 <INITIAL>[0-9]+	 {adjust(); yylval.ival=atoi(yytext); return INT;}
