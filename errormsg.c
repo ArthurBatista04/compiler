@@ -14,7 +14,7 @@
 extern FILE *yyin;
 
 // export external variable
-bool EM_anyErrors = FALSE;
+bool EM_anyErrors = 0;
 int EM_tokPos=0;
 
 // local variable
@@ -41,7 +41,7 @@ void EM_error(int pos, char *message,...) {
   IntList lines = linePos; 
   int num = lineNum;
 
-  EM_anyErrors=TRUE;
+  EM_anyErrors=1;
   while (lines && lines->i >= pos) {
     lines=lines->rest; num--;
   }
@@ -57,7 +57,7 @@ void EM_error(int pos, char *message,...) {
 }
 
 void EM_reset(string fname) {
-  EM_anyErrors = FALSE;
+  EM_anyErrors = 0;
   fileName = fname;
   lineNum = 1;
   linePos = intList(0,NULL);

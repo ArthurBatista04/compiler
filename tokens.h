@@ -48,4 +48,7 @@ extern YYSTYPE yylval;
 # define FUNCTION 297
 # define VAR 298
 # define TYPE 299
+# define TRUE 300
+# define FALSE 301
+# define BOOL 302
 
