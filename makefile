@@ -5,19 +5,19 @@ OBJECTS = lex.yy.o y.tab.o errormsg.o ./util/util.o
 all: lextest parsetest
 .PHONY: all
 
-parsetest: parsetest.o $(OBJECTS)
-	cc -g -o $@ parsetest.o $(OBJECTS)
-
 lextest: lextest.o $(OBJECTS)
 	cc -g -o $@ lextest.o $(OBJECTS)
 
+parsetest: parsetest.o $(OBJECTS)
+	cc -g -o $@ parsetest.o $(OBJECTS)
+
 # objects
-lextest.o: lextest.c y.tab.h errormsg.h ./util/util.h
-lex.yy.o: lex.yy.c y.tab.h errormsg.h ./util/util.h
 errormsg.o: errormsg.c errormsg.h ./util/util.h
 util.o: ./util/util.c ./util/util.h
 
 # lex
+lextest.o: lextest.c y.tab.h errormsg.h ./util/util.h
+lex.yy.o: lex.yy.c y.tab.h errormsg.h ./util/util.h
 lex.yy.c: ./scanner/tiger.lex
 	lex ./scanner/tiger.lex
 	

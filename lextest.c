@@ -4,8 +4,6 @@
 #include "errormsg.h"
 #include "tokens.h"
 
-YYSTYPE yylval;
-
 int yylex(void); /* prototype for the lexing function */
 
 string toknames[] = {

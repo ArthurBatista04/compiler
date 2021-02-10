@@ -15,6 +15,7 @@ void yyerror(char *s) {
 	int pos;
 	int ival;
 	string sval;
+    //bool bval;
   }
 
 %nonassoc LOW
@@ -57,6 +58,9 @@ exp: lvalue
    | LPAREN RPAREN
    | INT
    | STRING
+   | BOOL
+   | TRUE
+   | FALSE
    | MINUS exp %prec UMINUS
    | func_call
    | arith_exp
