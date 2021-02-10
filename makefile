@@ -18,14 +18,14 @@ util.o: ./util/util.c ./util/util.h
 # lex
 lextest.o: lextest.c y.tab.h errormsg.h ./util/util.h
 lex.yy.o: lex.yy.c y.tab.h errormsg.h ./util/util.h
-lex.yy.c: ./scanner/tiger.lex
-	lex ./scanner/tiger.lex
+lex.yy.c: ./frontend/tiger.lex
+	lex ./frontend/tiger.lex
 	
 # parse
 parsetest.o: parsetest.c errormsg.h util/util.h
 y.tab.o: y.tab.c
-y.tab.c: tiger.y
-	yacc -dv tiger.y
+y.tab.c: ./frontend/tiger.y
+	yacc -dv ./frontend/tiger.y
 y.tab.h: y.tab.c
 	echo "y.tab.h was created at the same time as y.tab.c"
 

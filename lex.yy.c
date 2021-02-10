@@ -527,8 +527,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "./scanner/tiger.lex"
-#line 2 "./scanner/tiger.lex"
+#line 1 "./frontend/tiger.lex"
+#line 2 "./frontend/tiger.lex"
 #include <string.h>
 #include "util/util.h"
 #include "errormsg.h"
@@ -796,9 +796,9 @@ YY_DECL
 		}
 
 	{
-#line 51 "./scanner/tiger.lex"
+#line 51 "./frontend/tiger.lex"
 
-#line 53 "./scanner/tiger.lex"
+#line 53 "./frontend/tiger.lex"
   /* ignore characters */
 #line 803 "lex.yy.c"
 
@@ -859,258 +859,258 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 54 "./scanner/tiger.lex"
+#line 54 "./frontend/tiger.lex"
 {adjust(); continue;}
 	YY_BREAK
 /* newline */
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 57 "./scanner/tiger.lex"
+#line 57 "./frontend/tiger.lex"
 {adjust(); EM_newline(); continue;}
 	YY_BREAK
 /* punctuation symbols */
 case 3:
 YY_RULE_SETUP
-#line 60 "./scanner/tiger.lex"
+#line 60 "./frontend/tiger.lex"
 {adjust(); return COMMA;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 61 "./scanner/tiger.lex"
+#line 61 "./frontend/tiger.lex"
 {adjust(); return COLON;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 62 "./scanner/tiger.lex"
+#line 62 "./frontend/tiger.lex"
 {adjust(); return SEMICOLON;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 63 "./scanner/tiger.lex"
+#line 63 "./frontend/tiger.lex"
 {adjust(); return LPAREN;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 64 "./scanner/tiger.lex"
+#line 64 "./frontend/tiger.lex"
 {adjust(); return RPAREN;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 65 "./scanner/tiger.lex"
+#line 65 "./frontend/tiger.lex"
 {adjust(); return LBRACK;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 66 "./scanner/tiger.lex"
+#line 66 "./frontend/tiger.lex"
 {adjust(); return RBRACK;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 67 "./scanner/tiger.lex"
+#line 67 "./frontend/tiger.lex"
 {adjust(); return LBRACE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 68 "./scanner/tiger.lex"
+#line 68 "./frontend/tiger.lex"
 {adjust(); return RBRACE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 69 "./scanner/tiger.lex"
+#line 69 "./frontend/tiger.lex"
 {adjust(); return DOT;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 70 "./scanner/tiger.lex"
+#line 70 "./frontend/tiger.lex"
 {adjust(); return PLUS;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 71 "./scanner/tiger.lex"
+#line 71 "./frontend/tiger.lex"
 {adjust(); return MINUS;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 72 "./scanner/tiger.lex"
+#line 72 "./frontend/tiger.lex"
 {adjust(); return TIMES;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 73 "./scanner/tiger.lex"
+#line 73 "./frontend/tiger.lex"
 {adjust(); return DIVIDE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 74 "./scanner/tiger.lex"
+#line 74 "./frontend/tiger.lex"
 {adjust(); return EQ;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 75 "./scanner/tiger.lex"
+#line 75 "./frontend/tiger.lex"
 {adjust(); return NEQ;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 76 "./scanner/tiger.lex"
+#line 76 "./frontend/tiger.lex"
 {adjust(); return LT;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 77 "./scanner/tiger.lex"
+#line 77 "./frontend/tiger.lex"
 {adjust(); return LE;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 78 "./scanner/tiger.lex"
+#line 78 "./frontend/tiger.lex"
 {adjust(); return GT;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 79 "./scanner/tiger.lex"
+#line 79 "./frontend/tiger.lex"
 {adjust(); return GE;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 80 "./scanner/tiger.lex"
+#line 80 "./frontend/tiger.lex"
 {adjust(); return AND;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 81 "./scanner/tiger.lex"
+#line 81 "./frontend/tiger.lex"
 {adjust(); return OR;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 82 "./scanner/tiger.lex"
+#line 82 "./frontend/tiger.lex"
 {adjust(); return ASSIGN;}
 	YY_BREAK
 /* reserved words */
 case 26:
 YY_RULE_SETUP
-#line 85 "./scanner/tiger.lex"
+#line 85 "./frontend/tiger.lex"
 {adjust(); return ARRAY;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 86 "./scanner/tiger.lex"
+#line 86 "./frontend/tiger.lex"
 {adjust(); return IF;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 87 "./scanner/tiger.lex"
+#line 87 "./frontend/tiger.lex"
 {adjust(); return THEN;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 88 "./scanner/tiger.lex"
+#line 88 "./frontend/tiger.lex"
 {adjust(); return ELSE;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 89 "./scanner/tiger.lex"
+#line 89 "./frontend/tiger.lex"
 {adjust(); return WHILE;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 90 "./scanner/tiger.lex"
+#line 90 "./frontend/tiger.lex"
 {adjust(); return FOR;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 91 "./scanner/tiger.lex"
+#line 91 "./frontend/tiger.lex"
 {adjust(); return TO;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 92 "./scanner/tiger.lex"
+#line 92 "./frontend/tiger.lex"
 {adjust(); return DO;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 93 "./scanner/tiger.lex"
+#line 93 "./frontend/tiger.lex"
 {adjust(); return LET;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 94 "./scanner/tiger.lex"
+#line 94 "./frontend/tiger.lex"
 {adjust(); return IN;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 95 "./scanner/tiger.lex"
+#line 95 "./frontend/tiger.lex"
 {adjust(); return END;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 96 "./scanner/tiger.lex"
+#line 96 "./frontend/tiger.lex"
 {adjust(); return OF;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 97 "./scanner/tiger.lex"
+#line 97 "./frontend/tiger.lex"
 {adjust(); return BREAK;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 98 "./scanner/tiger.lex"
+#line 98 "./frontend/tiger.lex"
 {adjust(); return NIL;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 99 "./scanner/tiger.lex"
+#line 99 "./frontend/tiger.lex"
 {adjust(); return FUNCTION;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 100 "./scanner/tiger.lex"
+#line 100 "./frontend/tiger.lex"
 {adjust(); return VAR;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 101 "./scanner/tiger.lex"
+#line 101 "./frontend/tiger.lex"
 {adjust(); return TYPE;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 102 "./scanner/tiger.lex"
+#line 102 "./frontend/tiger.lex"
 {adjust(); return TRUE;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 103 "./scanner/tiger.lex"
+#line 103 "./frontend/tiger.lex"
 {adjust(); return FALSE;}
 	YY_BREAK
 /* identifier */
 case 45:
 YY_RULE_SETUP
-#line 106 "./scanner/tiger.lex"
+#line 106 "./frontend/tiger.lex"
 {adjust(); yylval.sval=String(yytext); return ID;}
 	YY_BREAK
 /* string literal */
 case 46:
 YY_RULE_SETUP
-#line 109 "./scanner/tiger.lex"
+#line 109 "./frontend/tiger.lex"
 {adjust(); init_string_buffer(); BEGIN INSTRING;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 110 "./scanner/tiger.lex"
+#line 110 "./frontend/tiger.lex"
 {adjust(); yylval.sval = String(string_buffer); BEGIN 0; return STRING;}
 	YY_BREAK
 case 48:
 /* rule 48 can match eol */
 YY_RULE_SETUP
-#line 111 "./scanner/tiger.lex"
+#line 111 "./frontend/tiger.lex"
 {adjust(); EM_error(EM_tokPos,"unclose string: newline appear in string"); yyterminate();}
 	YY_BREAK
 case YY_STATE_EOF(INSTRING):
-#line 112 "./scanner/tiger.lex"
+#line 112 "./frontend/tiger.lex"
 {adjust(); EM_error(EM_tokPos,"unclose string"); yyterminate();}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 113 "./scanner/tiger.lex"
+#line 113 "./frontend/tiger.lex"
 {adjust(); int tmp; sscanf(yytext+1, "%d", &tmp);
                       if(tmp > 0xff) { EM_error(EM_tokPos,"ascii code out of range"); yyterminate(); }
                       append_to_buffer(tmp);
@@ -1118,80 +1118,80 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 117 "./scanner/tiger.lex"
+#line 117 "./frontend/tiger.lex"
 {adjust(); EM_error(EM_tokPos,"bad escape sequence"); yyterminate();}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 118 "./scanner/tiger.lex"
+#line 118 "./frontend/tiger.lex"
 {adjust(); append_to_buffer('\n');}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 119 "./scanner/tiger.lex"
+#line 119 "./frontend/tiger.lex"
 {adjust(); append_to_buffer('\t');}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 120 "./scanner/tiger.lex"
+#line 120 "./frontend/tiger.lex"
 {adjust(); append_to_buffer('\\');}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 121 "./scanner/tiger.lex"
+#line 121 "./frontend/tiger.lex"
 {adjust(); append_to_buffer('\"');}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 122 "./scanner/tiger.lex"
+#line 122 "./frontend/tiger.lex"
 {adjust(); append_to_buffer(yytext[1]-'a');}
 	YY_BREAK
 case 56:
 /* rule 56 can match eol */
 YY_RULE_SETUP
-#line 123 "./scanner/tiger.lex"
+#line 123 "./frontend/tiger.lex"
 {adjust(); int i; for(i = 0; yytext[i]; ++i) if(yytext[i] == '\n') EM_newline(); continue;}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 124 "./scanner/tiger.lex"
+#line 124 "./frontend/tiger.lex"
 {adjust(); char *tmp = yytext; while(*tmp) append_to_buffer(*tmp++);}
 	YY_BREAK
 /* integer literal */
 case 58:
 YY_RULE_SETUP
-#line 127 "./scanner/tiger.lex"
+#line 127 "./frontend/tiger.lex"
 {adjust(); yylval.ival=atoi(yytext); return INT;}
 	YY_BREAK
 /* comment part */
 case 59:
 YY_RULE_SETUP
-#line 130 "./scanner/tiger.lex"
+#line 130 "./frontend/tiger.lex"
 {adjust(); comment_level+=1; BEGIN COMMENT;}
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 131 "./scanner/tiger.lex"
+#line 131 "./frontend/tiger.lex"
 {adjust(); comment_level-=1; if(comment_level==0) BEGIN 0;}
 	YY_BREAK
 case YY_STATE_EOF(COMMENT):
-#line 132 "./scanner/tiger.lex"
+#line 132 "./frontend/tiger.lex"
 {adjust(); EM_error(EM_tokPos,"unclose comment"); yyterminate();}
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 133 "./scanner/tiger.lex"
+#line 133 "./frontend/tiger.lex"
 {adjust();}
 	YY_BREAK
 /* unknown input */
 case 62:
 YY_RULE_SETUP
-#line 136 "./scanner/tiger.lex"
+#line 136 "./frontend/tiger.lex"
 {adjust(); EM_error(EM_tokPos,"illegal token");}
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 137 "./scanner/tiger.lex"
+#line 137 "./frontend/tiger.lex"
 ECHO;
 	YY_BREAK
 #line 1197 "lex.yy.c"
@@ -2199,4 +2199,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 137 "./scanner/tiger.lex"
+#line 137 "./frontend/tiger.lex"
