@@ -1,8 +1,8 @@
 %{
 #include <string.h>
 #include "util/util.h"
-#include "tokens.h"
 #include "errormsg.h"
+#include "y.tab.h"
 
 /* comments allow to be nested, the more nested, the higher comment level */
 int comment_level=0;
