@@ -2,22 +2,25 @@
 #include <stdlib.h>
 #include "util/util.h"
 #include "errormsg.h"
-#include "tokens.h"
+#include "absyn.h"
+#include "y.tab.h"
+
+// YYSTYPE yylval;
 
 int yylex(void); /* prototype for the lexing function */
 
-string toknames[] = {
-"ID", "STRING", "INT", "COMMA", "COLON", "SEMICOLON", "LPAREN",
-"RPAREN", "LBRACK", "RBRACK", "LBRACE", "RBRACE", "DOT", "PLUS",
-"MINUS", "TIMES", "DIVIDE", "EQ", "NEQ", "LT", "LE", "GT", "GE",
-"AND", "OR", "ASSIGN", "ARRAY", "IF", "THEN", "ELSE", "WHILE", "FOR",
-"TO", "DO", "LET", "IN", "END", "OF", "BREAK", "NIL", "FUNCTION",
-"VAR", "TYPE", "TRUE", "FALSE", "BOOL"
+string toknames[] = { 
+"LOW", "FUNCTION", "TYPE", "ID", "LBRACK", "OF", "DO", "THEN",
+"ELSE", "SEMICOLON", "ASSIGN", "OR", "AND", "GE", "GT", "LE",
+"LT", "NEQ", "EQ", "MINUS", "PLUS", "DIVIDE", "TIMES", "UMINUS",
+"STRING", "INT", "COMMA", "COLON", "LPAREN", "RPAREN", "RBRACK",
+"LBRACE", "RBRACE", "DOT", "ARRAY", "IF", "WHILE", "FOR", "TO",
+"LET", "IN", "END", "BREAK", "NIL", "VAR"
 };
+// TODO INCLUDE  "TRUE", "FALSE", "BOOL"
 
-
-string tokname(int tok) {
-  return tok<257 || tok>302 ? "BAD_TOKEN" : toknames[tok-257];
+string tokname(tok) {
+  return tok<258 || tok>302 ? "BAD_TOKEN" : toknames[tok-258];
 }
 
 int main(int argc, char **argv) {

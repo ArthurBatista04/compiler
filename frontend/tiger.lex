@@ -1,8 +1,9 @@
 %{
 #include <string.h>
 #include "util/util.h"
-#include "errormsg.h"
+#include "absyn.h"
 #include "y.tab.h"
+#include "errormsg.h"
 
 /* comments allow to be nested, the more nested, the higher comment level */
 int comment_level=0;
@@ -22,7 +23,7 @@ static void init_string_buffer() {
 
 static void append_to_buffer(char c) {
   int new_length = strlen(string_buffer) + 1;
-
+  
   if(new_length >= STRING_LENGTH_CAPACITY) {
     char *tmp = string_buffer;
     STRING_LENGTH_CAPACITY *= 2;
