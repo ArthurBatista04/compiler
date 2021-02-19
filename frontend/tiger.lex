@@ -2,7 +2,7 @@
 #include <string.h>
 #include "util/util.h"
 #include "absyn.h"
-#include "y.tab.h"
+#include "tiger.tab.h"
 #include "errormsg.h"
 
 /* comments allow to be nested, the more nested, the higher comment level */

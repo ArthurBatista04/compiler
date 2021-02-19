@@ -71,9 +71,7 @@ A_exp absyn_root;
 %type <field> tyfield
 %type <fieldlist> tyfields tyfields_nonempty
 %type <fundec> fundec
-//%type <fundeclist>
 %type <namety> tydec
-//%type <nametylist>
 %type <efield> record_create_field
 %type <efieldlist> record_create_list record_create_list_nonempty
 

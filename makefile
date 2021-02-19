@@ -1,5 +1,5 @@
 # variable
-OBJECTS = lex.yy.o y.tab.o errormsg.o ./util/util.o absyn.o prabsyn.o symbol.o \
+OBJECTS = lex.yy.o tiger.tab.o errormsg.o ./util/util.o absyn.o prabsyn.o symbol.o \
           table.o parse.o
 
 # executable
@@ -25,22 +25,22 @@ table.o: table.c table.h ./util/util.h
 parse.o: parse.c parse.h ./util/util.h errormsg.h symbol.h absyn.h
 
 # lex
-lextest.o: lextest.c absyn.h symbol.h y.tab.h errormsg.h ./util/util.h
-lex.yy.o: lex.yy.c y.tab.h errormsg.h ./util/util.h
+lextest.o: lextest.c absyn.h symbol.h tiger.tab.h errormsg.h ./util/util.h
+lex.yy.o: lex.yy.c tiger.tab.h errormsg.h ./util/util.h
 lex.yy.c: ./frontend/tiger.lex
-	lex ./frontend/tiger.lex
+	flex ./frontend/tiger.lex
 
 # parse
 parsetest.o: parsetest.c errormsg.h ./util/util.h absyn.h symbol.h
-y.tab.o: y.tab.c
-y.tab.c: ./frontend/tiger.y
-	yacc -dv ./frontend/tiger.y
-y.tab.h: y.tab.c
-	echo "y.tab.h was created at the same time as y.tab.c"
+tiger.tab.o: tiger.tab.c
+tiger.tab.c: ./frontend/tiger.y
+	bison -dv ./frontend/tiger.y
+tiger.tab.h: tiger.tab.c
+	echo "tiger.tab.h was created at the same time as tiger.tab.c"
 
 # absyn
 absyntest.o: absyntest.c errormsg.h ./util/util.h absyn.h symbol.h parse.h prabsyn.h
 
 .PHONY: clean
 clean:
-	rm -f *.o a.out lextest parsetest absyntest lex.yy.c y.output y.tab.c y.tab.h
+	rm -f *.o a.out lextest parsetest absyntest lex.yy.c y.output tiger.tab.c tiger.tab.h

@@ -3,7 +3,7 @@
 #include "util/util.h"
 #include "errormsg.h"
 #include "absyn.h"
-#include "y.tab.h"
+#include "tiger.tab.h"
 
 // YYSTYPE yylval;
 
@@ -19,7 +19,7 @@ string toknames[] = {
 };
 // TODO INCLUDE  "TRUE", "FALSE", "BOOL"
 
-string tokname(tok) {
+string tokname(int tok) {
   return tok<258 || tok>302 ? "BAD_TOKEN" : toknames[tok-258];
 }
 
