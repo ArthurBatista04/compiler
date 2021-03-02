@@ -1,9 +1,9 @@
 # variable
 OBJECTS = lex.yy.o tiger.tab.o errormsg.o ./util/util.o absyn.o prabsyn.o symbol.o \
-          table.o parse.o
+          table.o parse.o env.o ./frontend/semantic.o types.o
 
 # executable
-all: lextest parsetest absyntest
+all: lextest parsetest absyntest typechecktest
 .PHONY: all
 
 lextest: lextest.o $(OBJECTS)
@@ -14,6 +14,9 @@ parsetest: parsetest.o $(OBJECTS)
 
 absyntest: absyntest.o $(OBJECTS)
 	cc -g -o $@ absyntest.o $(OBJECTS)
+
+typechecktest: typechecktest.o $(OBJECTS)
+	cc -o $@ typechecktest.o $(OBJECTS) -g
 
 # objects
 errormsg.o: errormsg.c errormsg.h ./util/util.h
@@ -41,6 +44,12 @@ tiger.tab.h: tiger.tab.c
 # absyn
 absyntest.o: absyntest.c errormsg.h ./util/util.h absyn.h symbol.h parse.h prabsyn.h
 
+# type-check
+typechecktest.o: typechecktest.c errormsg.h ./util/util.h absyn.h symbol.h
+env.o: env.c env.h
+semantic.o: ./frontend/semantic.c ./frontend/semantic.h
+types.o: types.c types.h
+
 .PHONY: clean
 clean:
-	rm -f *.o a.out lextest parsetest absyntest lex.yy.c y.output tiger.tab.c tiger.tab.h
+	rm -f *.o a.out lextest parsetest typechecktest absyntest lex.yy.c y.output tiger.tab.c tiger.tab.h tiger.output lex.yy.c tiger.tab.c tiger.tab.h
