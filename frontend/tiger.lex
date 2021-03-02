@@ -99,6 +99,8 @@ void adjust(void) {
 <INITIAL>function {adjust(); return FUNCTION;}
 <INITIAL>var      {adjust(); return VAR;}
 <INITIAL>type     {adjust(); return TYPE;}
+<INITIAL>true     {adjust(); return TRUE;}
+<INITIAL>false     {adjust(); return FALSE;}
 
   /* identifier */
 <INITIAL>[a-zA-Z][a-zA-Z0-9_]* {adjust(); yylval.sval=String(yytext); return ID;}

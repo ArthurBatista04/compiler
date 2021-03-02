@@ -9,6 +9,9 @@ Ty_ty Ty_Nil(void) {return &tynil;}
 static struct Ty_ty_ tyint = {Ty_int};
 Ty_ty Ty_Int(void) {return &tyint;}
 
+static struct Ty_ty_ tybool = {Ty_bool};
+Ty_ty Ty_Bool(void) {return &tybool;}
+
 static struct Ty_ty_ tystring = {Ty_string};
 Ty_ty Ty_String(void) {return &tystring;}
 
@@ -61,7 +64,7 @@ Ty_fieldList Ty_FieldList(Ty_field head, Ty_fieldList tail)
 
 /* printing functions - used for debugging */
 static char str_ty[][12] = {
-   "ty_record", "ty_nil", "ty_int", "ty_string", 
+   "ty_record", "ty_nil", "ty_int", "ty_bool", "ty_string", 
    "ty_array", "ty_name", "ty_void"};
 
 /* This will infinite loop on mutually recursive types */

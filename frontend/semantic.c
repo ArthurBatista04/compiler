@@ -1,4 +1,5 @@
 #include "semantic.h"
+#include <stdio.h>
 
 
 typedef void *Tr_exp;
@@ -101,6 +102,7 @@ expty transExp(S_table venv, S_table tenv, A_exp e) {
         case A_varExp: return transVar(venv, tenv, e->u.var);
         case A_nilExp: return expTy(NULL, Ty_Nil());
         case A_intExp: return expTy(NULL, Ty_Int());
+        case A_boolExp: return expTy(NULL, Ty_Bool());
         case A_stringExp: return expTy(NULL, Ty_String());
         case A_callExp: {
             E_enventry fun_entry = S_look(venv, e->u.call.func);
@@ -208,8 +210,9 @@ expty transExp(S_table venv, S_table tenv, A_exp e) {
         }
         case A_ifExp: {
             expty test = transExp(venv, tenv, e->u.iff.test);
-            if(test.ty->kind != Ty_int) {
-                EM_error(e->pos, "condition expression: test section must be integer");
+            
+            if((test.ty->kind != Ty_int) && (test.ty->kind != Ty_bool)) {
+                EM_error(e->pos, "condition expression: test section must be integer or bool");
                 return expTy(NULL, Ty_Void());
             }
             expty then = transExp(venv, tenv, e->u.iff.then);
@@ -229,8 +232,8 @@ expty transExp(S_table venv, S_table tenv, A_exp e) {
         }
         case A_whileExp: {
             expty test = transExp(venv, tenv, e->u.whilee.test);
-            if(test.ty->kind != Ty_int) {
-                EM_error(e->u.whilee.test->pos, "while loop: test section must produce integer");
+            if((test.ty->kind != Ty_int) && (test.ty->kind != Ty_bool) ) {
+                EM_error(e->u.whilee.test->pos, "while loop: test section must produce integer or bool");
                 return expTy(NULL, Ty_Void());
             }
             inside++; // inside loop

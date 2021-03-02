@@ -60,7 +60,7 @@ A_exp absyn_root;
   AND OR ASSIGN
   ARRAY IF THEN ELSE WHILE FOR TO DO LET IN END OF 
   BREAK NIL
-  FUNCTION VAR TYPE
+  FUNCTION VAR TYPE TRUE FALSE
 
 %type <var> lvalue
 %type <exp> program exp func_call arith_exp cmp_exp bool_exp record_create array_create
@@ -84,6 +84,8 @@ program: exp { absyn_root = $1; }
 exp: lvalue { $$ = A_VarExp(EM_tokPos, $1); }
    | NIL    { $$ = A_NilExp(EM_tokPos); }
    | INT           { $$ = A_IntExp(EM_tokPos, $1); }
+   | TRUE           { $$ = A_BoolExp(EM_tokPos, 1); }
+   | FALSE           { $$ = A_BoolExp(EM_tokPos, 0); }
    | STRING        { $$ = A_StringExp(EM_tokPos, $1); }
    | MINUS exp %prec UMINUS { $$ = A_OpExp(EM_tokPos, A_minusOp, A_IntExp(EM_tokPos, 0), $2); }
    | func_call     { $$ = $1; }

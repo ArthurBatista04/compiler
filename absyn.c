@@ -51,6 +51,14 @@ A_exp A_IntExp(A_pos pos, int i)
  return p;
 }
 
+A_exp A_BoolExp(A_pos pos, int i)
+{A_exp p = checked_malloc(sizeof(*p));
+ p->kind=A_boolExp;
+ p->pos=pos;
+ p->u.intt=i;
+ return p;
+}
+
 A_exp A_StringExp(A_pos pos, string s)
 {A_exp p = checked_malloc(sizeof(*p));
  p->kind=A_stringExp;

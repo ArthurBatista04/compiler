@@ -18,6 +18,7 @@ E_enventry E_FunEntry(Ty_tyList formals, Ty_ty results) {
 S_table E_base_tenv() {
     S_table tenv = S_empty();
     S_enter(tenv, S_Symbol("int"), Ty_Int());
+    S_enter(tenv, S_Symbol("bool"), Ty_Bool());
     S_enter(tenv, S_Symbol("string"), Ty_String());
     S_enter(tenv, S_Symbol("nil"), Ty_Nil());
     return tenv;
