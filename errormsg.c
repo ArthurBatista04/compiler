@@ -1,9 +1,3 @@
-/*
- * errormsg.c - functions used in all phases of the compiler to give
- *              error messages about the Tiger program.
- *
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>

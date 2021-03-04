@@ -1,8 +1,3 @@
-/*
- * table.c - Functions to manipulate generic tables.
- * Copyright (c) 1997 Andrew W. Appel.
- */
-
 #include <stdio.h>
 #include "util/util.h"
 #include "table.h"
@@ -30,15 +25,6 @@ TAB_table TAB_empty(void) {
     t->table[i] = NULL;
   return t;
 }
-
-/* The cast from pointer to integer in the expression
- *   ((unsigned)key) % TABSIZE
- * may lead to a warning message.  However, the code is safe,
- * and will still operate correctly.  This line is just hashing
- * a pointer value into an integer value, and no matter how the
- * conversion is done, as long as it is done consistently, a
- * reasonable and repeatable index into the table will result.
- */
 
 
 void TAB_enter(TAB_table t, void *key, void *value) {

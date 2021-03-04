@@ -1,6 +1,4 @@
-/*
- * parse.c - Parse source file.
- */
+
 
 #include <stdio.h>
 #include "symbol.h"
