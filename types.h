@@ -1,3 +1,9 @@
+/*
+ * types.h - 
+ *
+ * All types and functions declared in this header file begin with "Ty_"
+ * Linked list types end with "..list"
+ */
 #ifndef TYPES_H__
 #define TYPES_H__
 
@@ -8,7 +14,7 @@ typedef struct Ty_tyList_ *Ty_tyList;
 typedef struct Ty_field_ *Ty_field;
 typedef struct Ty_fieldList_ *Ty_fieldList;
 
-struct Ty_ty_ {enum {Ty_record, Ty_nil, Ty_int, Ty_bool, Ty_string, Ty_array,
+struct Ty_ty_ {enum {Ty_record, Ty_nil, Ty_int, Ty_string, Ty_array, Ty_bool,
 		       Ty_name, Ty_void} kind;
 	       union {Ty_fieldList record;
 		      Ty_ty array;
