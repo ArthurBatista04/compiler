@@ -1,6 +1,9 @@
 #ifndef TRANSLATE_H_
 #define TRANSLATE_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "printtree.h"
 #include "temp.h"
 
 typedef struct Tr_level_ *Tr_level;
