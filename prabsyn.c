@@ -77,7 +77,7 @@ void pr_exp(FILE *out, A_exp v, int d) {
     fprintf(out, "intExp(%d)", v->u.intt);
     break;
   case A_boolExp:
-    fprintf(out, "boolExp(%s)", v->u.intt == 0 ? "false" : "rue");
+    fprintf(out, "boolExp(%s)", v->u.intt == 0 ? "false" : "true");
     break;
   case A_stringExp:
     fprintf(out, "stringExp(%s)", v->u.stringg);

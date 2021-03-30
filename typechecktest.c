@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "util/util.h"
 #include "errormsg.h"
-#include "parse.h"
+#include "frontend/parse.h"
 #include "absyn.h"
 #include "symbol.h"
 #include "frontend/semantic.h"

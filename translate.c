@@ -97,7 +97,7 @@ Tr_level Tr_newLevel(Tr_level parent, Temp_label name, U_boolList formals) {
     Tr_level level = checked_malloc(sizeof(*level));
     level->parent = parent;
     level->name = name;
-    level->frame = F_newFrame(name, U_BoolList(TRUE, formals)); 
+    level->frame = F_newFrame(name, U_BoolList(1, formals)); 
     level->formals = make_formals(level);
     return level;
 }
@@ -256,6 +256,11 @@ Tr_exp Tr_nilExp() {
 }
 
 Tr_exp Tr_intExp(int n) {
+    return Tr_Ex(T_Const(n));
+}
+
+Tr_exp Tr_boolExp(int n) {
+    printf("%d\n\n", n);
     return Tr_Ex(T_Const(n));
 }
 

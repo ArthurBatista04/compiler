@@ -9,7 +9,9 @@
 #include "../types.h"
 #include "../translate.h"
 #include "../frame.h"
+#include <stdlib.h>
 
-void SEM_transProg(A_exp exp);
+
+F_fragList SEM_transProg(A_exp exp);
 
 #endif
