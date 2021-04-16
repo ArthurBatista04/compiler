@@ -43,7 +43,7 @@ static bool actual_eq(Ty_ty source, Ty_ty target) {
 F_fragList SEM_transProg(A_exp exp) {
     S_table venv = E_base_venv(), tenv = E_base_tenv();
     expty trans_exp = transExp(Tr_outermost(), venv, tenv, exp);
-    Tr_printTree(trans_exp.exp); // print the ir tree
+    Tr_procEntryExit(Tr_outermost(), trans_exp.exp, NULL); // main
     return Tr_getResult();
 }
 
@@ -484,6 +484,7 @@ static Tr_exp transDec(Tr_level level, S_table venv, S_table tenv, A_dec d) {
                     EM_error(d->pos, "function declare: body type and return type with <%s>", S_name(fun_list->head->name));
                     exit(1);
                 }
+                Tr_procEntryExit(fun_entry->u.fun.level, exp.exp, m_accessList);
                 S_endScope(venv);
             }
             return Tr_noExp();
