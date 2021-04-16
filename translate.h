@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "printtree.h"
 #include "temp.h"
+#include "canon.h"
 
 typedef struct Tr_level_ *Tr_level;
 typedef struct Tr_access_ *Tr_access;

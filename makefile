@@ -1,7 +1,7 @@
 # variable
 OBJECTS = lex.yy.o tiger.tab.o errormsg.o ./util/util.o absyn.o prabsyn.o symbol.o \
           table.o ./frontend/parse.o env.o ./frontend/semantic.o types.o mipsframe.o temp.o \
-		  translate.o escape.o tree.o printtree.o
+		  translate.o escape.o tree.o printtree.o canon.o
 
 # executable
 all: lextest parsetest absyntest typechecktest translatetest
@@ -65,6 +65,9 @@ translate.o: translate.h
 tree.o: tree.h
 printtree.o: printtree.h
 translatetest.o: translatetest.c errormsg.h util/util.h absyn.h symbol.h frame.h
+
+# canon
+canon.o: canon.h
 
 .PHONY: clean
 clean:
