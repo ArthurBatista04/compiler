@@ -28,9 +28,9 @@ static void do_proc(FILE *out, F_frame frame, T_stm body) {
     stm_l   = C_linearize(body);
     stm_l   = C_traceSchedule(C_basicBlocks(stm_l));
     /* canon tree */
-    // printf("Canon tree\n");
-    // printStmList(out, stm_l);
-    // printf("\n---------\n");
+     printf("Canon tree\n");
+     printStmList(out, stm_l);
+     printf("\n---------\n");
 
     /* assembly */
     instr_l = F_codegen(frame, stm_l);

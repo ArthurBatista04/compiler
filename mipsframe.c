@@ -68,9 +68,8 @@ F_accessList F_formals(F_frame f) {
 }
 
 F_access F_allocLocal(F_frame f, bool escape) {
-    assert(f && escape);
     f->locals++;
-    return InFrame(-(f->locals * F_WORD_SIZE));
+    return escape ? InFrame(-(f->locals * F_WORD_SIZE)) : InReg(Temp_newtemp());
 }
 
 T_exp F_Exp(F_access acc, T_exp framePtr) {

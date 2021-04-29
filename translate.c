@@ -65,11 +65,7 @@ Tr_expList Tr_ExpList(Tr_exp head, Tr_expList tail) {
     return el;
 }
 
-static Tr_level outer = NULL; // 库函数和全局变量的level
-/**
- * 每次调用都是返回同样的level 就是库函数和全局变量的level
- * 
- */
+static Tr_level outer = NULL; 
 Tr_level Tr_outermost() {
     if(!outer) {
         outer = Tr_newLevel(NULL, Temp_newlabel(), NULL);
@@ -86,9 +82,9 @@ static Tr_access Tr_Access(Tr_level level, F_access access) {
 
 static Tr_accessList make_formals(Tr_level level) {
 	Tr_accessList head = NULL, tail = NULL;
-	F_accessList al = F_formals(level->frame)->tail; // ignore head node, 不需要把static link也加进去
-                                                     // translate模块只需要在new frame的时候告诉frame添加一个static link
-                                                     // 自己不需要处理static link
+	F_accessList al = F_formals(level->frame)->tail; 
+                                                     
+                                                     
 	for (; al; al = al->tail) {
 		Tr_access access = Tr_Access(level, al->head);
 		if (head) {
@@ -106,7 +102,7 @@ Tr_level Tr_newLevel(Tr_level parent, Temp_label name, U_boolList formals) {
     Tr_level level = checked_malloc(sizeof(*level));
     level->parent = parent;
     level->name = name;
-    level->frame = F_newFrame(name, U_BoolList(1, formals)); // 在原formals的基础上多添加一个用作static link
+    level->frame = F_newFrame(name, U_BoolList(1, formals)); 
     level->formals = make_formals(level);
     return level;
 }
@@ -222,12 +218,6 @@ Tr_exp Tr_noExp() {
     return Tr_Ex(T_Const(0));
 }
 
-/**
- * translate frame access to simple varaible
- * 
- * note:
- * access may be declared in outer level, so it needs to follow the static link to find.
- */
 Tr_exp Tr_simpleVar(Tr_access access, Tr_level level) {
     T_exp fp = T_Temp(F_FP());
     Tr_level current_level = level;
@@ -248,12 +238,6 @@ Tr_exp Tr_subscriptVar(Tr_exp array, Tr_exp index) {
                         T_Binop(T_mul, unEx(index), T_Const(F_WORD_SIZE)))));
 }
 
-/**
- * nil is treated as a record with no memory space
- * 
- * note:
- * built-in function "initRecord" need a paramater, so called size, to allocate memory space
- */
 Tr_exp Tr_nilExp() {
     static Temp_temp nil = NULL;
     if(!nil) {

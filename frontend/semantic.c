@@ -1,4 +1,5 @@
 #include "semantic.h"
+#include "../escape.h"
 
 typedef struct expty_ {
     Tr_exp exp;
@@ -368,7 +369,7 @@ static Tr_exp transDec(Tr_level level, S_table venv, S_table tenv, A_dec d) {
                     exit(1);
                 }
             }
-            Tr_access m_access = Tr_allocLocal(level, 1); // to keep things easy, all vars are escaping
+            Tr_access m_access = Tr_allocLocal(level, d->u.var.escape); // escape 
             S_enter(venv, d->u.var.var, E_VarEntry(m_access, init_exp.ty));
             return Tr_assignExp(Tr_simpleVar(m_access, level), init_exp.exp);
         }
