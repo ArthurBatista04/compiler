@@ -53,6 +53,7 @@ Tr_exp Tr_assignExp(Tr_exp lv, Tr_exp rv);
 Tr_exp Tr_nopExp(void);
 Tr_exp Tr_nilExp(void);
 Tr_exp Tr_intExp(int v);
+Tr_exp Tr_boolExp(int v);
 Tr_exp Tr_stringExp(string s);
 Tr_exp Tr_seqExp(Tr_expList seq);
 

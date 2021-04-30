@@ -31,6 +31,7 @@ S_table E_base_tenv(void) {
 	S_table tmp = S_empty();
 	S_beginScope(tmp);
 	S_enter(tmp, S_Symbol(String("int")), Ty_Int());
+	S_enter(tmp, S_Symbol(String("int")), Ty_Bool());
 	S_enter(tmp, S_Symbol(String("string")), Ty_String());
 	return tmp;
 }

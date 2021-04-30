@@ -37,6 +37,7 @@ static void traverseExp(S_table env, int depth, A_exp a) {
 	}
 	case A_nilExp:
 	case A_intExp:
+	case A_boolExp:
 	case A_stringExp:
 		return;
 	case A_callExp:

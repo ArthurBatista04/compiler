@@ -11,6 +11,8 @@ static struct Ty_ty_ tynil = {Ty_nil};
 Ty_ty  Ty_Nil(void) { return &tynil; }
 static struct Ty_ty_ tyint = { Ty_int };
 Ty_ty Ty_Int(void) { return &tyint; }
+static struct Ty_ty_ tybool = { Ty_bool };
+Ty_ty Ty_Bool(void) { return &tybool; }
 static struct Ty_ty_ tystring = { Ty_string };
 Ty_ty Ty_String(void) { return &tystring; }
 static struct Ty_ty_ tyvoid = { Ty_void };
