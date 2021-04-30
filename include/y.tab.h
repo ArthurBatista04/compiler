@@ -1,8 +1,9 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.7.6.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
+   Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -30,6 +31,10 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
+
 #ifndef YY_YY_SRC_Y_TAB_H_INCLUDED
 # define YY_YY_SRC_Y_TAB_H_INCLUDED
 /* Debug traces.  */
@@ -40,59 +45,70 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ID = 258,
-    STRING = 259,
-    INT = 260,
-    COMMA = 261,
-    COLON = 262,
-    SEMICOLON = 263,
-    LPAREN = 264,
-    RPAREN = 265,
-    LBRACK = 266,
-    RBRACK = 267,
-    LBRACE = 268,
-    RBRACE = 269,
-    DOT = 270,
-    PLUS = 271,
-    MINUS = 272,
-    TIMES = 273,
-    DIVIDE = 274,
-    EQ = 275,
-    NEQ = 276,
-    LT = 277,
-    LE = 278,
-    GT = 279,
-    GE = 280,
-    AND = 281,
-    OR = 282,
-    ASSIGN = 283,
-    ARRAY = 284,
-    IF = 285,
-    THEN = 286,
-    ELSE = 287,
-    WHILE = 288,
-    FOR = 289,
-    TO = 290,
-    DO = 291,
-    LET = 292,
-    IN = 293,
-    END = 294,
-    OF = 295,
-    BREAK = 296,
-    NIL = 297,
-    FUNCTION = 298,
-    VAR = 299,
-    TYPE = 300,
-    LPREC = 301,
-    UMINUS = 302
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    ID = 258,                      /* ID  */
+    STRING = 259,                  /* STRING  */
+    INT = 260,                     /* INT  */
+    COMMA = 261,                   /* COMMA  */
+    COLON = 262,                   /* COLON  */
+    SEMICOLON = 263,               /* SEMICOLON  */
+    LPAREN = 264,                  /* LPAREN  */
+    RPAREN = 265,                  /* RPAREN  */
+    LBRACK = 266,                  /* LBRACK  */
+    RBRACK = 267,                  /* RBRACK  */
+    LBRACE = 268,                  /* LBRACE  */
+    RBRACE = 269,                  /* RBRACE  */
+    DOT = 270,                     /* DOT  */
+    PLUS = 271,                    /* PLUS  */
+    MINUS = 272,                   /* MINUS  */
+    TIMES = 273,                   /* TIMES  */
+    DIVIDE = 274,                  /* DIVIDE  */
+    EQ = 275,                      /* EQ  */
+    NEQ = 276,                     /* NEQ  */
+    LT = 277,                      /* LT  */
+    LE = 278,                      /* LE  */
+    GT = 279,                      /* GT  */
+    GE = 280,                      /* GE  */
+    AND = 281,                     /* AND  */
+    OR = 282,                      /* OR  */
+    ASSIGN = 283,                  /* ASSIGN  */
+    ARRAY = 284,                   /* ARRAY  */
+    IF = 285,                      /* IF  */
+    THEN = 286,                    /* THEN  */
+    ELSE = 287,                    /* ELSE  */
+    WHILE = 288,                   /* WHILE  */
+    FOR = 289,                     /* FOR  */
+    TO = 290,                      /* TO  */
+    DO = 291,                      /* DO  */
+    LET = 292,                     /* LET  */
+    IN = 293,                      /* IN  */
+    END = 294,                     /* END  */
+    OF = 295,                      /* OF  */
+    BREAK = 296,                   /* BREAK  */
+    NIL = 297,                     /* NIL  */
+    FUNCTION = 298,                /* FUNCTION  */
+    VAR = 299,                     /* VAR  */
+    TYPE = 300,                    /* TYPE  */
+    TRUE = 301,                    /* TRUE  */
+    FALSE = 302,                   /* FALSE  */
+    LPREC = 303,                   /* LPREC  */
+    UMINUS = 304                   /* UMINUS  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Tokens.  */
+/* Token kinds.  */
+#define YYEMPTY -2
+#define YYEOF 0
+#define YYerror 256
+#define YYUNDEF 257
 #define ID 258
 #define STRING 259
 #define INT 260
@@ -136,15 +152,16 @@ extern int yydebug;
 #define FUNCTION 298
 #define VAR 299
 #define TYPE 300
-#define LPREC 301
-#define UMINUS 302
+#define TRUE 301
+#define FALSE 302
+#define LPREC 303
+#define UMINUS 304
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
 union YYSTYPE
 {
-#line 23 "src/tiger.y" /* yacc.c:1909  */
+#line 23 "src/tiger.y"
 
 	int pos;
 	int ival;
@@ -164,9 +181,9 @@ union YYSTYPE
       A_efieldList recordfields;
 	
 
-#line 168 "src/y.tab.h" /* yacc.c:1909  */
-};
+#line 185 "src/y.tab.h"
 
+};
 typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

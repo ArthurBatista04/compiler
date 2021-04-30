@@ -96,9 +96,9 @@ G_nodeList G_nodes(G_graph g) {
 bool G_inNodeList(G_node a, G_nodeList l) {
 	G_nodeList p = l;
 	for (p = l; p; p = p->tail) {
-		if (p->head == a) return TRUE;
+		if (p->head == a) return 1;
 	}
-	return FALSE;
+	return 0;
 }
 
 void G_addEdge(G_node from, G_node to) {
@@ -164,9 +164,9 @@ G_nodeList G_adj(G_node n) {
 bool G_goesTo(G_node a, G_node b) {
 	G_nodeList p = a->succ;
 	for (; p; p = p->tail) {
-		if (p->head == b) return TRUE;
+		if (p->head == b) return 1;
 	}
-	return FALSE;
+	return 0;
 }
 
 int G_degree(G_node n) {

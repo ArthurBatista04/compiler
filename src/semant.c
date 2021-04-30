@@ -15,8 +15,8 @@
 static int ty_equal(Ty_ty t1, Ty_ty t2) {
 	Ty_ty at1 = actual_ty(t1);
 	Ty_ty at2 = actual_ty(t2);
-	if (at1->kind == Ty_record && at2->kind == Ty_nil) return TRUE;
-	else if (at1->kind == Ty_nil && at2->kind == Ty_record) return TRUE;
+	if (at1->kind == Ty_record && at2->kind == Ty_nil) return 1;
+	else if (at1->kind == Ty_nil && at2->kind == Ty_record) return 1;
 	else return at1 == at2;
 }
 
@@ -283,7 +283,7 @@ struct expty transExp(Tr_level level, S_table venv, S_table tenv, A_exp a, Tr_ex
 		Tr_exp oldbreak = breakk;
 		breakk = Tr_doneExp();
 		S_beginScope(venv);
-		Tr_access i = Tr_allocLocal(level, FALSE);
+		Tr_access i = Tr_allocLocal(level, 0);
 		S_enter(venv, a->u.forr.var, E_VarEntry(i,Ty_Int()));
 		struct expty e1 = transExp(level, venv, tenv, a->u.forr.lo,breakk);
 		struct expty e2 = transExp(level, venv, tenv, a->u.forr.hi,breakk);

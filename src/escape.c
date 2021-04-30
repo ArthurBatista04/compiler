@@ -93,7 +93,7 @@ static void traverseExp(S_table env, int depth, A_exp a) {
 	case A_forExp:
 	{
 		S_beginScope(env);
-		a->u.forr.escape = FALSE;
+		a->u.forr.escape = 0;
 		S_enter(env, a->u.forr.var, Escape_Entry(depth, &(a->u.forr.escape)));
 		traverseExp(env, depth,a->u.forr.lo);
 		traverseExp(env, depth,a->u.forr.hi);
@@ -129,7 +129,7 @@ static void traverseDec(S_table env, int depth, A_dec d) {
 	case A_varDec:
 	{
 		traverseExp(env, depth, d->u.var.init);
-		d->u.var.escape = FALSE;
+		d->u.var.escape = 0;
 		S_enter(env, d->u.var.var, Escape_Entry(depth, &(d->u.var.escape)));
 		return;
 	}
@@ -146,7 +146,7 @@ static void traverseDec(S_table env, int depth, A_dec d) {
 			{
 				A_fieldList l;
 				for (l = f->params; l; l = l->tail) {
-					l->head->escape = FALSE;
+					l->head->escape = 0;
 					S_enter(env, l->head->name, Escape_Entry(depth + 1, &(l->head->escape)));
 				}
 			}
@@ -167,7 +167,7 @@ static void traverseVar(S_table env, int depth, A_var v) {
 	{
 		escape_entry x = S_look(env, v->u.simple);
 		if (x) {
-			if (depth > x->d) *(x->escape) = TRUE;
+			if (depth > x->d) *(x->escape) = 1;
 		}
 		return;
 	}

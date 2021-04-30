@@ -49,7 +49,7 @@ void yyerror(char *s)
   AND OR ASSIGN
   ARRAY IF THEN ELSE WHILE FOR TO DO LET IN END OF 
   BREAK NIL
-  FUNCTION VAR TYPE 
+  FUNCTION VAR TYPE TRUE FALSE
 %nonassoc LPREC
 %right THEN ELSE
 %nonassoc OF DO
@@ -86,6 +86,8 @@ exp:        lvalue                        {$$=A_VarExp(EM_tokPos, $1);}
     |       NIL                           {$$=A_NilExp(EM_tokPos);}
     |       LPAREN expseq RPAREN          {$$=A_SeqExp(EM_tokPos, $2);}
     |       INT                           {$$=A_IntExp(EM_tokPos, $1);}
+    |       TRUE                          {$$=A_BoolExp(EM_tokPos, 1);}
+    |       FALSE                         {$$=A_BoolExp(EM_tokPos, 0);}
     |       STRING                        {$$=A_StringExp(EM_tokPos, $1);}
     |       ID LPAREN argseq RPAREN       {$$=A_CallExp(EM_tokPos, S_Symbol($1), $3);}
 

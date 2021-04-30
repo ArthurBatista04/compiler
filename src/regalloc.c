@@ -28,7 +28,7 @@ static Temp_tempList Union_Temp_tempList(Temp_tempList l1, Temp_tempList l2) {
 static TAB_table allocSpillTemp(F_frame f, Temp_tempList spillNodes) {
     TAB_table table = TAB_empty();
     for (; spillNodes; spillNodes = spillNodes->tail) {
-        F_access access = F_allocLocal(f, TRUE);
+        F_access access = F_allocLocal(f, 1);
         TAB_enter(table, spillNodes->head, access);
     }
     return table;
@@ -49,9 +49,9 @@ static bool checkInstDefTemp(AS_instr inst, Temp_temp temp) {
     }
     for (; defs; defs = defs->tail) {
         if (defs->head == temp)
-            return TRUE;
+            return 1;
     }
-    return FALSE;
+    return 0;
 }
 
 static bool checkInstUseTemp(AS_instr inst, Temp_temp temp) {
@@ -69,9 +69,9 @@ static bool checkInstUseTemp(AS_instr inst, Temp_temp temp) {
     }
     for (; uses; uses = uses->tail) {
         if (uses->head == temp)
-            return TRUE;
+            return 1;
     }
-    return FALSE;
+    return 0;
 }
 
 static void replaceTempListTemp(Temp_tempList tempList, Temp_temp from, Temp_temp to) {

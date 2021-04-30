@@ -94,6 +94,8 @@ else {adjust(); return ELSE;}
 do {adjust(); return DO;}
 of {adjust(); return OF;}
 nil {adjust(); return NIL;}
+true {adjust(); return TRUE;}
+false {adjust(); return FALSE;}
 
 [0-9]+	 {adjust(); yylval.ival=atoi(yytext); return INT;}
 [A-Za-z][A-Za-z0-9_]* {adjust(); yylval.sval = String(yytext); return ID;}

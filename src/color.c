@@ -111,13 +111,13 @@ static G_nodeList union_G_nodeList(G_nodeList list, G_node x) {
 static bool checkIn_G_nodeList(G_nodeList list, G_node x) {
     for (; list; list = list->tail) {
         if (list->head == x)
-            return TRUE;
+            return 1;
     }
-    return FALSE;
+    return 0;
 }
 
 static bool MoveRelated(G_node node) {
-    return FALSE; // todo: not consider move and coalescing
+    return 0; // todo: not consider move and coalescing
 }
 
 static bool isPrecolored(G_node node);
@@ -172,15 +172,15 @@ static bool checkNodeInSelectStack(G_node node) {
     G_nodeList p = global.selectStack;
     while (p) {
         if (p->head == node)
-            return TRUE;
+            return 1;
         p = p->tail;
     }
-    return FALSE;
+    return 0;
 }
 
 static bool checkNodeInCoalescedNodes(G_node node) {
     // todo: check..
-    return FALSE;
+    return 0;
 }
 
 static G_nodeList Adjacent(G_node node) {

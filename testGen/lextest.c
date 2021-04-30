@@ -17,7 +17,7 @@ string toknames[] = {
     "DIVIDE", "TIMES",    "UMINUS",    "STRING", "INT",    "COMMA", "COLON",
     "LPAREN", "RPAREN",   "RBRACK",    "LBRACE", "RBRACE", "DOT",   "ARRAY",
     "IF",     "WHILE",    "FOR",       "TO",     "LET",    "IN",    "END",
-    "BREAK",  "NIL",      "VAR",       "TRUE",   "FALSE"};
+    "BREAK",  "NIL",      "VAR",       "1",   "0"};
 
 string tokname(int tok) {
   return tok < 256 || tok > 304 ? "BAD_TOKEN" : toknames[tok - 258];

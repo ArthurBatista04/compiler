@@ -206,7 +206,7 @@ static Tr_accessList make_trformals_list(Tr_level level) {
 Tr_level Tr_newLevel(Tr_level parent, Temp_label name, U_boolList formals) {
 	Tr_level level = checked_malloc(sizeof(*level));
 	level->parent = parent;
-	level->frame = F_newFrame(name, U_BoolList(TRUE, formals));//�Ӹ���̬��λ
+	level->frame = F_newFrame(name, U_BoolList(1, formals));//�Ӹ���̬��λ
 	level->formals = make_trformals_list(level);
 	return level;
 }

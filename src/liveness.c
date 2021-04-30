@@ -89,8 +89,8 @@ static void bitmap_diff(bitmap c, bitmap a, bitmap b) {
 static bool bitmap_equal(bitmap a, bitmap b) {
 	int i;
 	for (int i = 0; i < bitmap_len; i++)
-		if (a[i] != b[i]) return FALSE;
-	return TRUE;
+		if (a[i] != b[i]) return 0;
+	return 1;
 }
 
 static void bitmap_clear(bitmap a) {
