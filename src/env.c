@@ -1,11 +1,3 @@
-/**
- * @brief 
- * 
- * @file env.c
- * @author lishihao
- * @date 2018-06-09
- */
-
 #include "env.h"
 #include "util.h"
 E_enventry E_VarEntry(Tr_access access ,Ty_ty ty) {

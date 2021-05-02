@@ -1,8 +1,3 @@
-
-//
-// Created by Zhao Xiaodong on 2018/5/14.
-//
-
 #ifndef LJZ_TC_CANON_H
 #define LJZ_TC_CANON_H
 

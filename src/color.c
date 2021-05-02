@@ -1,7 +1,3 @@
-//
-// Created by Zhao Xiaodong on 2018/5/28.
-//
-
 #include <string.h>
 #include "assem.h"
 #include "graph.h"
@@ -23,7 +19,7 @@ static enum COL_nodeType {
 };
 
 static struct Global {
-    Temp_map precolored; // todo: temp_map使用
+    Temp_map precolored; 
     Temp_map color;
     G_graph graph;
     G_table degrees;
@@ -50,7 +46,7 @@ static enum COL_moveType {
     COL_MOVE_ACTIVE
 };
 
-static AS_instrList coalesedMoves = NULL; // todo: AS_instrList使用
+static AS_instrList coalesedMoves = NULL; 
 static AS_instrList constrainedMoves = NULL;
 static AS_instrList frozenMoves = NULL;
 static AS_instrList worklistMoves = NULL;
@@ -61,10 +57,10 @@ static Temp_tempList diff_Temp_tempList(Temp_tempList list, Temp_temp x) {
         return NULL;
     if (list->head == x)
         return list->tail;
-    Temp_tempList p = list; // todo: changed original structure
+    Temp_tempList p = list; 
     while (p->tail) {
         if (p->tail->head == x) {
-            p->tail = p->tail->tail; // todo: not free memory
+            p->tail = p->tail->tail; 
             return list;
         }
         p = p->tail;
@@ -87,10 +83,10 @@ static G_nodeList diff_G_nodeList(G_nodeList list, G_node x) {
         return NULL;
     if (list->head == x)
         return list->tail;
-    G_nodeList p = list; // todo: changed original structure
+    G_nodeList p = list; 
     while (p->tail) {
         if (p->tail->head == x) {
-            p->tail = p->tail->tail; // todo: not free memory
+            p->tail = p->tail->tail; 
             return list;
         }
         p = p->tail;
@@ -286,7 +282,7 @@ static void Init(G_graph ig, Temp_map initial, Temp_tempList regs) {
         p_nodeList = p_nodeList->tail;
     }
 
-    // 初始化precoloredNodes
+    //precoloredNodes
     for (G_nodeList p = G_nodes(ig); p; p = p->tail) {
         if (isPrecolored(p->head)) {
             global.precoloredNodes = union_G_nodeList(global.precoloredNodes, p->head);

@@ -1,9 +1,4 @@
 %{
-  /*
-   * modified by Zhao Xiaodong 2018/4/26
-   * add token parse about string and comment
-   * string parsed with esacape in raw format
-   */
 #include <string.h>
 #include "util.h"
 #include "absyn.h"

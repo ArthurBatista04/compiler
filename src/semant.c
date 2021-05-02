@@ -1,10 +1,3 @@
-/**
- * @brief
- *
- * @file semant.c
- * @author lishihao
- * @date 2018-06-09
- */
 #include "semant.h"
 #include "env.h"
 #include "errormsg.h"
@@ -461,7 +454,6 @@ Tr_exp transDec(Tr_level level, S_table venv, S_table tenv, A_dec d,
       if (body.ty != resultTy) {
         EM_error(f->pos, "return value mismatch");
       }
-      /*δ��� �ӽ�λ��xxx*/
       Tr_progEntryExit(pp->head, body.exp, Tr_formals(pp->head));
       S_endScope(venv);
     }

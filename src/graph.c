@@ -1,10 +1,3 @@
-/**
- * @brief 
- * refer to textbook but wrote myself
- * @file graph.c
- * @author lishihao
- * @date 2018-06-09
- */
 #include "graph.h"
 
 struct G_graph_ {

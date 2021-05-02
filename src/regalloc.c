@@ -1,7 +1,3 @@
-//
-// Created by Zhao Xiaodong on 2018/5/31.
-//
-
 #include <string.h>
 #include <assem.h>
 #include "assem.h"

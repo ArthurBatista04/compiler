@@ -1,10 +1,3 @@
-/**
- * @brief 
- * 
- * @file escape.c
- * @author lishihao
- * @date 2018-06-09
- */
 #include "escape.h"
 #include "symbol.h"
 #include "absyn.h"

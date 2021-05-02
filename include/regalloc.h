@@ -1,7 +1,3 @@
-//
-// Created by Zhao Xiaodong on 2018/5/31.
-//
-
 #ifndef LJZ_TC_REGALLOC_H
 #define LJZ_TC_REGALLOC_H
 

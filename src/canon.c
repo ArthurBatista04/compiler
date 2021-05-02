@@ -1,14 +1,7 @@
-//
-// Created by Zhao Xiaodong on 2018/5/14.
-//
-
 #include "temp.h"
 #include "tree.h"
 #include "canon.h"
 
-/*
- * data structure referenced from book
- */
 
 typedef struct expRefList_ *expRefList;
 struct expRefList_ {
@@ -16,9 +9,6 @@ struct expRefList_ {
     expRefList tail;
 };
 
-/*
- * expRefList的构造函数
- */
 expRefList ExpRefList(T_exp *exp, expRefList tail) {
     expRefList res = (expRefList) checked_malloc(sizeof(*res));
     res->head = exp;
@@ -31,9 +21,6 @@ struct stmExp {
     T_exp exp;
 };
 
-/*
- * stmExp的构造函数
- */
 struct stmExp StmExp(T_stm stm, T_exp exp) {
     struct stmExp res;
     res.stm = stm;
@@ -61,25 +48,14 @@ static C_stmListList start_block(T_stmList stmList, Temp_label done);
 
 static C_stmListList end_block_and_gen_others(T_stmList prevStmList, T_stmList currStmList, Temp_label done);
 
-/*
- * referenced from book
- * 判断是不是Nop
- */
 static bool isNop(T_stm x) {
     return x->kind == T_EXP && x->u.EXP->kind == T_CONST;
 }
 
-/*
- * referenced from book
- * 判断是否可以交换
- */
 static bool commute(T_stm x, T_exp y) {
     return isNop(x) || y->kind == T_NAME || y->kind == T_CONST; // todo: 为什么name可以commute
 }
 
-/*
- * 得到CALL语句的子语句指针
- */
 static expRefList get_call_reflist(T_exp callExp) {
     expRefList res = ExpRefList(&callExp->u.CALL.fun, NULL);
     expRefList p = res;
@@ -92,9 +68,6 @@ static expRefList get_call_reflist(T_exp callExp) {
     return res;
 }
 
-/*
- * 找出所有ESEQ的statement，合并重组到一个stm钟
- */
 static T_stm reorder(expRefList refList) {
     if (!refList)
         return T_Exp(T_Const(0));
@@ -108,7 +81,6 @@ static T_stm reorder(expRefList refList) {
                 );
     }
 
-    // 一般的规则
     struct stmExp head = do_exp(*refList->head);
     T_stm others = reorder(refList->tail);
 
@@ -128,9 +100,6 @@ static T_stm reorder(expRefList refList) {
     );
 }
 
-/*
- * 简化一个sequence
- */
 static T_stm seq(T_stm x, T_stm y) {
     if (isNop(x)) {
         return y;
@@ -141,10 +110,6 @@ static T_stm seq(T_stm x, T_stm y) {
     return T_Seq(x, y);
 }
 
-/*
- * referenced from book
- * 转化一个exp，结果为statement以及一个转化好的exp
- */
 static struct stmExp do_exp(T_exp exp) {
     switch (exp->kind) {
         case T_BINOP:
@@ -165,9 +130,8 @@ static struct stmExp do_exp(T_exp exp) {
                     exp
             );
         case T_ESEQ: {
-            struct stmExp x = do_exp(exp->u.ESEQ.exp); // 拿到eseq的exp进行转换
+            struct stmExp x = do_exp(exp->u.ESEQ.exp); 
             return StmExp(
-                    // 新的stm包含了原来的和eseq的stm中的内容
                     seq(
                             do_stm(exp->u.ESEQ.stm),
                             x.stm
@@ -185,10 +149,6 @@ static struct stmExp do_exp(T_exp exp) {
     }
 }
 
-/*
- * referenced from book
- * 转化一个statement
- */
 static T_stm do_stm(T_stm stm) {
     switch (stm->kind) {
         case T_SEQ:
@@ -241,16 +201,13 @@ static T_stm do_stm(T_stm stm) {
             } else if (stm->u.MOVE.dst->kind == T_ESEQ) {
                 T_stm s = stm->u.MOVE.dst->u.ESEQ.stm;
                 stm->u.MOVE.dst = s->u.MOVE.dst->u.ESEQ.exp;
-                return do_stm(T_Seq(s, stm)); // todo: 为什么这样，s在什么时候执行？？
+                return do_stm(T_Seq(s, stm)); 
             }
         default:
             return stm;
     }
 }
 
-/*
- * 递归的将修改过的树转化成list
- */
 static T_stmList linear(T_stm stm, T_stmList right) {
     if (stm->kind == T_SEQ) {
         return linear(stm->u.SEQ.left, linear(stm->u.SEQ.right, right));
@@ -259,9 +216,6 @@ static T_stmList linear(T_stm stm, T_stmList right) {
     }
 }
 
-/*
- * constructor of C_stmListList
- */
 static C_stmListList C_StmListList(T_stmList head, C_stmListList tail) {
     C_stmListList res = (C_stmListList) checked_malloc(sizeof(*res));
     res->head = head;
@@ -271,30 +225,24 @@ static C_stmListList C_StmListList(T_stmList head, C_stmListList tail) {
 
 static C_stmListList end_block_and_gen_others(T_stmList prevStmList, T_stmList currStmList, Temp_label done) {
     if (!currStmList) {
-        // 结束，添加到done的JUMP
         T_stmList stmList = T_StmList(T_Jump(T_Name(done), Temp_LabelList(done, NULL)), NULL);
         return end_block_and_gen_others(prevStmList, stmList, done);
     }
     if (currStmList->head->kind == T_JUMP || currStmList->head->kind == T_CJUMP) {
-        // 正常的block，结束
         T_stmList newStmList = currStmList->tail;
         prevStmList->tail = currStmList;
         currStmList->tail = NULL;
 
-        // 生成其它的blocks
         return start_block(newStmList, done);
     } else if (currStmList->head->kind == T_LABEL) {
-        // 需要结束，但需要添加JUMP语句
         T_stm jump_stm = T_Jump(
                 T_Name(currStmList->head->u.LABEL),
                 Temp_LabelList(currStmList->head->u.LABEL, NULL)
         );
         prevStmList->tail = T_StmList(jump_stm, NULL);
 
-        // 生成其它的blocks
         return start_block(currStmList, done);
     } else {
-        // 普通语句 advance
         prevStmList->tail = currStmList;
 
         return end_block_and_gen_others(currStmList, currStmList->tail, done);
@@ -308,7 +256,6 @@ static C_stmListList start_block(T_stmList stmList, Temp_label done) {
     if (head->kind == T_LABEL) {
         return C_StmListList(stmList, end_block_and_gen_others(stmList, stmList->tail, done));
     } else {
-        // 如果一开始不是label，那就建一个重新来过
         Temp_label label = Temp_newlabel();
         T_stmList newStmList = T_StmList(T_Label(label), stmList);
         return start_block(newStmList, done);
@@ -327,7 +274,6 @@ static void initTable(C_stmListList stmListList) {
 }
 
 static T_stmList gen_trace(T_stmList head_stmList) {
-    // remove record of this block (marked as used)
     S_enter(table, head_stmList->head->u.LABEL, NULL);
 
     T_stmList second_last_stmList = head_stmList;
@@ -338,11 +284,9 @@ static T_stmList gen_trace(T_stmList head_stmList) {
 
     if (last_stm->kind == T_JUMP) {
         T_stmList dst = (T_stmList) S_look(table, last_stm->u.JUMP.jumps->head);
-        if (dst) { // todo:...
-            // 删掉多余的JUMP
+        if (dst) { 
             second_last_stmList->tail = gen_trace(dst);
         } else {
-            // 不能删
             last_stmList->tail = NULL;
         }
     } else if (last_stm->kind == T_CJUMP) {
@@ -350,10 +294,8 @@ static T_stmList gen_trace(T_stmList head_stmList) {
         T_stmList false_dst = (T_stmList) S_look(table, last_stm->u.CJUMP.false);
 
         if (false_dst) {
-            // 不用做额外的操作
             last_stmList->tail = gen_trace(false_dst);
         } else if (true_dst) {
-            // 把条件和跳转反一下
             T_stm flipped_jump = T_Cjump(T_notRel(last_stm->u.CJUMP.op),
                                          last_stm->u.CJUMP.left,
                                          last_stm->u.CJUMP.right,
@@ -363,7 +305,6 @@ static T_stmList gen_trace(T_stmList head_stmList) {
             last_stmList->head = flipped_jump;
             last_stmList->tail = gen_trace(true_dst);
         } else {
-            // 手动添加false跳转
             Temp_label false_label = Temp_newlabel();
             last_stmList->head = T_Cjump(last_stm->u.CJUMP.op,
                                          last_stm->u.CJUMP.left,
@@ -396,7 +337,7 @@ struct C_block C_basicBlocks(T_stmList stmList) {
 T_stmList C_traceSchedule(struct C_block b) {
     initTable(b.stmLists);
 
-    T_stmList dummy_head_res = T_StmList(NULL, NULL); // todo: little trick, not good
+    T_stmList dummy_head_res = T_StmList(NULL, NULL); 
     T_stmList p_stmList = dummy_head_res;
     C_stmListList curr_stmListList = b.stmLists;
 

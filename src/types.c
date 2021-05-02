@@ -1,10 +1,3 @@
-/**
- * @brief 
- * refer to textbook
- * @file types.c
- * @author your name
- * @date 2018-06-09
- */
 #include "types.h"
 #include "util.h"
 static struct Ty_ty_ tynil = {Ty_nil};

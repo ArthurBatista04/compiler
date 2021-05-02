@@ -123,14 +123,6 @@ static void format(char *result, string assem,
 				}
 				break;
 			}
-					  // case 'j':
-					  //     assert(jumps);
-					  //     {   int n = atoi(++p);
-					  //         string s = Temp_labelstring(nthLabel(jumps->labels,n));
-					  //         strcpy(result+i, s);
-					  //         i += strlen(s);
-					  //     }
-					  //     break;
 			case '`':
 				result[i] = '`';
 				i++;

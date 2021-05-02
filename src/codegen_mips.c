@@ -1,10 +1,3 @@
-/**
- * @brief 
- * 
- * @file codegen_mips.c
- * @author Ji Yixin
- * @date 2018-06-10
- */
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
@@ -65,26 +58,18 @@ static void munchStm(T_stm s)
 			return;
 		case T_lt:
 			emit(AS_Oper(FormatString("blt `s0, `s1, %s\n", labelStr), NULL, Temp_TempList(left, Temp_TempList(right, NULL)), targets));
-			// emit(AS_Oper("slt $at, `s0, `s1\n", NULL, Temp_TempList(left, Temp_TempList(right, NULL)), NULL));
-			// emit(AS_Oper(FormatString("bne $at, $zero, %s\n", labelStr), NULL, NULL, targets));
 			emit(AS_Oper("nop\n", NULL, NULL, NULL));
 			return;
 		case T_gt:
 			emit(AS_Oper(FormatString("bgt `s0, `s1, %s\n", labelStr), NULL, Temp_TempList(left, Temp_TempList(right, NULL)), targets));
-			// emit(AS_Oper("slt $at, `s0, `s1\n", NULL, Temp_TempList(right, Temp_TempList(left, NULL)), NULL));
-			// emit(AS_Oper(FormatString("bne $at, $zero, %s\n", labelStr), NULL, NULL, targets));
 			emit(AS_Oper("nop\n", NULL, NULL, NULL));
 			return;
 		case T_le:
 			emit(AS_Oper(FormatString("ble `s0, `s1, %s\n", labelStr), NULL, Temp_TempList(left, Temp_TempList(right, NULL)), targets));
-			// emit(AS_Oper("slt $at, `s0, `s1\n", NULL, Temp_TempList(right, Temp_TempList(left, NULL)), NULL));
-			// emit(AS_Oper(FormatString("beq $at, $zero, %s\n", labelStr), NULL, NULL, targets));
 			emit(AS_Oper("nop\n", NULL, NULL, NULL));
 			return;
 		case T_ge:
 			emit(AS_Oper(FormatString("bge `s0, `s1, %s\n", labelStr), NULL, Temp_TempList(left, Temp_TempList(right, NULL)), targets));
-			// emit(AS_Oper("slt $at, `s0, `s1\n", NULL, Temp_TempList(left, Temp_TempList(right, NULL)), NULL));
-			// emit(AS_Oper(FormatString("beq $at, $zero, %s\n", labelStr), NULL, NULL, targets));
 			emit(AS_Oper("nop\n", NULL, NULL, NULL));
 			return;
 		default:
@@ -206,7 +191,6 @@ static void munchStm(T_stm s)
 		}
 		else
 		{
-			// emit(AS_Move("move `d0, `s0\n", Temp_TempList(munchExp(s->u.MOVE.dst), NULL), Temp_TempList(munchExp(s->u.MOVE.src), NULL), NULL));
 			T_exp e = s->u.MOVE.src;
 			if (e->kind == T_BINOP && e->u.BINOP.op == T_plus)
 			{
@@ -280,7 +264,6 @@ static Temp_temp munchExp(T_exp e)
 				Temp_TempList(munchExp(e->u.BINOP.left),
 					Temp_TempList(munchExp(e->u.BINOP.right), NULL)),
 				NULL));
-			// emit(AS_Oper("mflo `d0\n", Temp_TempList(d, NULL), NULL, NULL));
 
 			return d;
 		}
@@ -392,7 +375,6 @@ static Temp_temp munchExp(T_exp e)
 	}
 	case T_CONST:
 	{
-		// 为0时，选择特殊寄存器$zero
 		Temp_temp d;
 		if (e->u.CONST)
 		{
@@ -407,7 +389,6 @@ static Temp_temp munchExp(T_exp e)
 	}
 	case T_CALL:
 	{
-		// Temp_temp d = Temp_newtemp();
 		Temp_tempList args = munchArgs(e->u.CALL.args);
 		AS_targets targets = AS_Targets(Temp_LabelList(e->u.CALL.fun->u.NAME, NULL));
 		emit(AS_Oper(FormatString("jal %s\n", Temp_labelstring(e->u.CALL.fun->u.NAME)),
@@ -467,7 +448,6 @@ static Temp_tempList munchArgs(T_expList argExps)
 AS_instrList F_codegen(F_frame f, T_stmList stmList)
 {
 	assert(f);
-	// 栈帧大小常数
 	strcpy(framesize, Temp_labelstring(F_name(f)));
 	strcpy(framesize + strlen(Temp_labelstring(F_name(f))), "_FRAMESIZE");
 	T_stmList sl;

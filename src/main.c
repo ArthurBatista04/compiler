@@ -1,10 +1,3 @@
-/**
- * @brief 
- * 
- * @file main.c
- * @author Ji Yixin
- * @date 2018-06-10
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -297,11 +290,9 @@ void doProc(FILE *file, FILE *assemFile, F_frame frame, T_stm stm) {
 	T_stmList tracedStmList = C_traceSchedule(block);
 	printStmList(file, tracedStmList);
 
-	/***������һ������***/
 	AS_instrList instrList = F_codegen(frame, tracedStmList);
 	instrList = F_progEntryExit2(instrList, done);
 	/******/
-	/***�ϲ���һ����ӡ����***/
 //    fprintf(file, "%s", proc->prolog);
 //    AS_printInstrList(file, instrList, F_get_tempmap());
 //    fprintf(file, "%s", proc->epilog);

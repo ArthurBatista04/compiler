@@ -1,10 +1,3 @@
-/**
- * @brief
- *
- * @file translate.c
- * @author lishihao
- * @date 2018-06-09
- */
 #include "translate.h"
 #include "frame.h"
 #include "tree.h"
