@@ -23,11 +23,7 @@ static void do_proc(FILE *out, F_frame frame, T_stm body) {
   AS_instrList instr_l = NULL;
   T_stmList stm_l = NULL;
 
-  /* dumping map */
-  //  printf("Mapping\n");
-  // Temp_dumpMap(out, F_tempMap());
-  // printf("\n---------\n");
-
+  
   stm_l = C_linearize(body);
   stm_l = C_traceSchedule(C_basicBlocks(stm_l));
   if (print_canon) {
@@ -134,11 +130,12 @@ int main(int argc, char *argv[]) {
   F_fragList frags = SEM_transProg(absyn_root);
 
   /* proc */
-  for (F_fragList f = frags; f; f = f->tail) {
-    if (f->head->kind == F_procFrag) {
-      do_proc(out, f->head->u.proc.frame, f->head->u.proc.body);
-    }
-  }
+  for (; frags; frags = frags->tail)
+    if (frags->head->kind == F_procFrag)
+      do_proc(out, frags->head->u.proc.frame, frags->head->u.proc.body);
+    else if (frags->head->kind == F_stringFrag)
+      fprintf(out, "%s\n", frags->head->u.stringg.str);
+  fclose(out);
 
   return 0;
 }
