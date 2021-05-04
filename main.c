@@ -35,6 +35,7 @@ static void do_proc(FILE *out, F_frame frame, T_stm body) {
     printf("Canon tree\n");
     printStmList(out, stm_l);
     printf("\n---------\n");
+    print_canon = 0;
   }
 
   /* assembly */
@@ -43,6 +44,7 @@ static void do_proc(FILE *out, F_frame frame, T_stm body) {
     fprintf(out, "========== ASM  ==========\n");
     AS_printInstrList(out, instr_l, F_tempMap());
     fprintf(out, "\n========== End ==========\n\n");
+    print_before_reg_alloc = 0;
   }
 }
 
@@ -111,7 +113,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  A_exp absyn_root = parse(argv[1]);
+  A_exp absyn_root = parse(input_file);
   if (absyn_root == NULL) {
     fprintf(stderr, "something wrong with parser\n");
     return 1;
@@ -131,21 +133,12 @@ int main(int argc, char *argv[]) {
   /* Semantic and Translate */
   F_fragList frags = SEM_transProg(absyn_root);
 
-  /* Assembly code */
-  fprintf(out, "========== ASM  ==========\n");
-
   /* proc */
   for (F_fragList f = frags; f; f = f->tail) {
     if (f->head->kind == F_procFrag) {
       do_proc(out, f->head->u.proc.frame, f->head->u.proc.body);
     }
   }
-  /* string */
-  //   for (F_fragList f = frags; f; f = f->tail) {
-  //     if (f->head->kind == F_stringFrag) {
-  //       do_string(out, f->head->u.proc.frame, f->head->u.proc.body);
-  //     }
-  //   }
 
   return 0;
 }
