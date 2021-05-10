@@ -1,2 +1,2 @@
 /* correct if */
-if (true) then 30 else 40	
+if (20) then 30 else 40	

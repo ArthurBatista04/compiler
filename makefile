@@ -5,7 +5,7 @@ OBJECTS = lex.yy.o tiger.tab.o errormsg.o ./util/util.o absyn.o prabsyn.o symbol
 
 
 # executable
-all: lextest parsetest absyntest typechecktest translatetest a.out
+all: lextest parsetest absyntest typechecktest translatetest tc
 .PHONY: all
 
 lextest: lextest.o $(OBJECTS)
@@ -24,7 +24,7 @@ typechecktest: typechecktest.o $(OBJECTS)
 translatetest: translatetest.o $(OBJECTS)
 	cc -o $@ translatetest.o $(OBJECTS)
 
-a.out: main.o $(OBJECTS)
+tc: main.o $(OBJECTS)
 	cc -o $@ main.o $(OBJECTS)
 
 # objects
@@ -79,4 +79,4 @@ mipscodegen.o: codegen.h
 
 .PHONY: clean
 clean:
-	rm -f *.o a.out lextest parsetest typechecktest absyntest translatetest lex.yy.c y.output tiger.tab.c tiger.tab.h tiger.output lex.yy.c tiger.tab.c tiger.tab.h
+	rm -f *.o tc lextest parsetest typechecktest absyntest translatetest lex.yy.c y.output tiger.tab.c tiger.tab.h tiger.output lex.yy.c tiger.tab.c tiger.tab.h

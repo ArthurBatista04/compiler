@@ -11,6 +11,7 @@
 #include "printtree.h"
 #include "symbol.h"
 #include "temp.h"
+#include "translate.h"
 #include "tree.h"
 #include "util/util.h"
 #include <stdio.h>
@@ -23,7 +24,6 @@ static void do_proc(FILE *out, F_frame frame, T_stm body) {
   AS_instrList instr_l = NULL;
   T_stmList stm_l = NULL;
 
-  
   stm_l = C_linearize(body);
   stm_l = C_traceSchedule(C_basicBlocks(stm_l));
   if (print_canon) {
@@ -129,12 +129,19 @@ int main(int argc, char *argv[]) {
   /* Semantic and Translate */
   F_fragList frags = SEM_transProg(absyn_root);
 
+  if (print_ir_tree) {
+
+    fprintf(out, "========== IR Tree ==========\n");
+    Tr_printTree(get_exp(absyn_root));
+    fprintf(out, "\n========== End ==========\n\n");
+  }
+
   /* proc */
   for (; frags; frags = frags->tail)
     if (frags->head->kind == F_procFrag)
       do_proc(out, frags->head->u.proc.frame, frags->head->u.proc.body);
-    else if (frags->head->kind == F_stringFrag)
-      fprintf(out, "%s\n", frags->head->u.stringg.str);
+  // else if (frags->head->kind == F_stringFrag)
+  //   fprintf(out, "%s\n", frags->head->u.stringg.str);
   fclose(out);
 
   return 0;
