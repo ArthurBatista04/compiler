@@ -1,82 +1,59 @@
 # variable
-OBJECTS = lex.yy.o tiger.tab.o errormsg.o ./util/util.o absyn.o prabsyn.o symbol.o \
-          table.o ./frontend/parse.o env.o ./frontend/semantic.o types.o mipsframe.o temp.o \
-		  translate.o escape.o tree.o printtree.o canon.o assem.o mipscodegen.o
+OBJECTS = lex.yy.o tiger.tab.o src/errormsg.o src/util.o src/absyn.o src/prabsyn.o src/symbol.o \
+          src/table.o src/parse.o src/env.o src/semantic.o src/types.o src/mipsframe.o src/temp.o \
+		  src/translate.o src/escape.o src/tree.o src/printtree.o src/canon.o src/assem.o src/mipscodegen.o
 
 
 # executable
-all: lextest parsetest absyntest typechecktest translatetest tc
+all: tc
 .PHONY: all
 
-lextest: lextest.o $(OBJECTS)
-	cc -g -o $@ lextest.o $(OBJECTS)
 
-parsetest: parsetest.o $(OBJECTS)
-	cc -g -o $@ parsetest.o $(OBJECTS)
-
-absyntest: absyntest.o $(OBJECTS)
-	cc -g -o $@ absyntest.o $(OBJECTS)
-
-typechecktest: typechecktest.o $(OBJECTS)
-	cc -o $@ typechecktest.o $(OBJECTS) 
-
-
-translatetest: translatetest.o $(OBJECTS)
-	cc -o $@ translatetest.o $(OBJECTS)
-
-tc: main.o $(OBJECTS)
+tc: main.o  $(OBJECTS)
 	cc -o $@ main.o $(OBJECTS)
 
 # objects
-errormsg.o: errormsg.c errormsg.h ./util/util.h
-util.o: ./util/util.c ./util/util.h
-absyn.o: absyn.c absyn.h ./util/util.h symbol.h
-prabsyn.o: prabsyn.c prabsyn.h ./util/util.h absyn.h
-symbol.o: symbol.c symbol.h ./util/util.h table.h
-table.o: table.c table.h ./util/util.h
-parse.o: ./frontend/parse.c ./frontend/parse.h ./util/util.h errormsg.h symbol.h absyn.h
+errormsg.o: src/errormsg.c include/errormsg.h include/util.h
+util.o: src/util.c include/util.h
+absyn.o: src/absyn.c include/absyn.h include/util.h include/symbol.h
+prabsyn.o: src/prabsyn.c include/prabsyn.h include/util.h include/absyn.h
+symbol.o: src/symbol.c include/symbol.h include/util.h include/table.h
+table.o: src/table.c include/table.h include/util.h
+parse.o: src/parse.c include/parse.h include/util.h include/errormsg.h include/symbol.h include/absyn.h
 
 # lex
-lextest.o: lextest.c absyn.h symbol.h tiger.tab.h errormsg.h ./util/util.h
-lex.yy.o: lex.yy.c tiger.tab.h errormsg.h ./util/util.h
-lex.yy.c: ./frontend/tiger.lex
-	flex ./frontend/tiger.lex
+lex.yy.o: lex.yy.c tiger.tab.h include/errormsg.h include/util.h
+lex.yy.c: src/tiger.lex
+	flex src/tiger.lex
 
 # parse
-parsetest.o: parsetest.c errormsg.h ./util/util.h absyn.h symbol.h
 tiger.tab.o: tiger.tab.c
-tiger.tab.c: ./frontend/tiger.y
-	bison -dv ./frontend/tiger.y
+tiger.tab.c: src/tiger.y
+	bison -dv src/tiger.y
 tiger.tab.h: tiger.tab.c
-	echo "tiger.tab.h was created at the same time as tiger.tab.c"
-
-# absyn
-absyntest.o: absyntest.c errormsg.h ./util/util.h absyn.h symbol.h ./frontend/parse.h prabsyn.h
 
 # type-check
-typechecktest.o: typechecktest.c errormsg.h ./util/util.h absyn.h symbol.h
-env.o: env.c env.h
-semantic.o: ./frontend/semantic.c ./frontend/semantic.h
-types.o: types.c types.h
+env.o: src/env.c include/env.h
+semantic.o: src/semantic.c include/semantic.h
+types.o: src/types.c include/types.h
 
 # frame
-mipsframe.o: frame.h
-temp.o: temp.h
-escape.o: escape.h
+mipsframe.o: include/frame.h
+temp.o: include/temp.h
+escape.o: include/escape.h
 
 # translate
-translate.o: translate.h
-tree.o: tree.h
-printtree.o: printtree.h
-translatetest.o: translatetest.c errormsg.h util/util.h absyn.h symbol.h frame.h
+translate.o: include/translate.h
+tree.o: include/tree.h
+printtree.o: include/printtree.h
 
 # canon
-canon.o: canon.h
+canon.o: include/canon.h
 
 # instruction
-assme.o: assem.h
-mipscodegen.o: codegen.h
+assem.o: include/assem.h
+mipscodegen.o: include/codegen.h
 
 .PHONY: clean
 clean:
-	rm -f *.o tc lextest parsetest typechecktest absyntest translatetest lex.yy.c y.output tiger.tab.c tiger.tab.h tiger.output lex.yy.c tiger.tab.c tiger.tab.h
+	rm -f *.o src/*.o tc lex.yy.c y.output tiger.tab.c tiger.tab.h tiger.output lex.yy.c tiger.tab.c tiger.tab.h

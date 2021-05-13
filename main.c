@@ -1,19 +1,19 @@
-#include "absyn.h"
-#include "assem.h"
-#include "canon.h"
-#include "codegen.h"
-#include "errormsg.h"
-#include "escape.h"
-#include "frame.h"
-#include "frontend/parse.h"
-#include "frontend/semantic.h"
-#include "prabsyn.h"
-#include "printtree.h"
-#include "symbol.h"
-#include "temp.h"
-#include "translate.h"
-#include "tree.h"
-#include "util/util.h"
+#include "include/absyn.h"
+#include "include/canon.h"
+#include "include/codegen.h"
+#include "include/errormsg.h"
+#include "include/escape.h"
+#include "include/frame.h"
+#include "include/parse.h"
+#include "include/semantic.h"
+#include "include/assem.h"
+#include "include/prabsyn.h"
+#include "include/printtree.h"
+#include "include/symbol.h"
+#include "include/temp.h"
+#include "include/translate.h"
+#include "include/tree.h"
+#include "include/util.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,14 +27,14 @@ static void do_proc(FILE *out, F_frame frame, T_stm body) {
   stm_l = C_linearize(body);
   stm_l = C_traceSchedule(C_basicBlocks(stm_l));
   if (print_canon) {
-    /* canon tree */
+    
     printf("Canon tree\n");
     printStmList(out, stm_l);
     printf("\n---------\n");
     print_canon = 0;
   }
 
-  /* assembly */
+  
   instr_l = F_codegen(frame, stm_l);
   if (print_before_reg_alloc) {
     fprintf(out, "========== ASM  ==========\n");
@@ -117,16 +117,16 @@ int main(int argc, char *argv[]) {
 
   FILE *out = stdout;
   if (print_absyn_tree) {
-    /* Absyn tree */
+    
     fprintf(out, "========== Absyn Tree ==========\n");
     pr_exp(out, absyn_root, 0);
     fprintf(out, "\n========== End ==========\n\n");
   }
 
-  /* Set escape varibles */
+  
   Esc_findEscape(absyn_root);
 
-  /* Semantic and Translate */
+  
   F_fragList frags = SEM_transProg(absyn_root);
 
   if (print_ir_tree) {
@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
     fprintf(out, "\n========== End ==========\n\n");
   }
 
-  /* proc */
+  
   for (; frags; frags = frags->tail)
     if (frags->head->kind == F_procFrag)
       do_proc(out, frags->head->u.proc.frame, frags->head->u.proc.body);
