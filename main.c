@@ -27,20 +27,15 @@ static void do_proc(FILE *out, F_frame frame, T_stm body) {
   stm_l = C_linearize(body);
   stm_l = C_traceSchedule(C_basicBlocks(stm_l));
   if (print_canon) {
-    
-    printf("Canon tree\n");
     printStmList(out, stm_l);
-    printf("\n---------\n");
-    print_canon = 0;
   }
 
   
   instr_l = F_codegen(frame, stm_l);
   if (print_before_reg_alloc) {
-    fprintf(out, "========== ASM  ==========\n");
+    
     AS_printInstrList(out, instr_l, F_tempMap());
-    fprintf(out, "\n========== End ==========\n\n");
-    print_before_reg_alloc = 0;
+    
   }
 }
 
