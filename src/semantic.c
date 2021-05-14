@@ -1,5 +1,7 @@
 #include "../include/semantic.h"
 #include "../include/escape.h"
+#include "../include/translate.h"
+
 
 typedef struct expty_ {
   Tr_exp exp;
@@ -150,6 +152,7 @@ static expty transExp(Tr_level level, S_table venv, S_table tenv, A_exp e) {
   case A_opExp: {
     expty left = transExp(level, venv, tenv, e->u.op.left);
     expty right = transExp(level, venv, tenv, e->u.op.right);
+    Tr_exp translation = Tr_noExp();
     switch (e->u.op.oper) {
     case A_plusOp:
     case A_minusOp:
@@ -164,12 +167,42 @@ static expty transExp(Tr_level level, S_table venv, S_table tenv, A_exp e) {
     }
     case A_eqOp:
     case A_neqOp: {
-
-      if (!actual_eq(left.ty, right.ty)) {
-        EM_error(e->pos, "different type are being compared");
-        return expTy(Tr_noExp(), Ty_Int());
-      }
-      return expTy(Tr_relExp(e->u.op.oper, left.exp, right.exp), Ty_Int());
+      switch(left.ty->kind) {
+						case Ty_int:
+							if (right.ty = left.ty)
+								translation = Tr_eqExp(e->u.op.oper, left.exp, right.exp);
+							break;
+						case Ty_string:
+							if (right.ty = left.ty)
+								translation = Tr_eqStringExp(e->u.op.oper, left.exp, right.exp);
+							break;
+						case Ty_array:
+						{
+							if (right.ty->kind != left.ty->kind) {
+							  EM_error(e->pos, "different type are being compared");
+							}
+							translation = Tr_eqRef(e->u.op.oper, left.exp, right.exp);
+							break;
+						}
+						case Ty_record:
+						{
+							if (right.ty->kind != Ty_record && right.ty->kind != Ty_nil) {
+								EM_error(e->pos, "different type are being compared");
+							}
+							translation = Tr_eqRef(e->u.op.oper, left.exp, right.exp);
+							break;
+						}
+						default:
+						{
+						  EM_error(e->pos, "different type are being compared");
+						}
+					}
+					return expTy(translation, Ty_Int());
+      // if (!actual_eq(left.ty, right.ty)) {
+      //   EM_error(e->pos, "different type are being compared");
+      //   return expTy(Tr_noExp(), Ty_Int());
+      // }
+      // return expTy(Tr_relExp(e->u.op.oper, left.exp, right.exp), Ty_Int());
     }
     case A_ltOp:
     case A_leOp:
