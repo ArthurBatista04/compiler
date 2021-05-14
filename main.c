@@ -1,14 +1,14 @@
 #include "include/absyn.h"
+#include "include/assem.h"
 #include "include/canon.h"
 #include "include/codegen.h"
 #include "include/errormsg.h"
 #include "include/escape.h"
 #include "include/frame.h"
 #include "include/parse.h"
-#include "include/semantic.h"
-#include "include/assem.h"
 #include "include/prabsyn.h"
 #include "include/printtree.h"
+#include "include/semantic.h"
 #include "include/symbol.h"
 #include "include/temp.h"
 #include "include/translate.h"
@@ -20,6 +20,7 @@
 #include <unistd.h>
 int print_absyn_tree = 0, print_ir_tree = 0, print_before_reg_alloc = 0,
     print_after_reg_alloc = 0, print_canon = 0;
+
 static void do_proc(FILE *out, F_frame frame, T_stm body) {
   AS_instrList instr_l = NULL;
   T_stmList stm_l = NULL;
@@ -30,12 +31,10 @@ static void do_proc(FILE *out, F_frame frame, T_stm body) {
     printStmList(out, stm_l);
   }
 
-  
   instr_l = F_codegen(frame, stm_l);
   if (print_before_reg_alloc) {
-    
+
     AS_printInstrList(out, instr_l, F_tempMap());
-    
   }
 }
 
@@ -106,23 +105,25 @@ int main(int argc, char *argv[]) {
 
   A_exp absyn_root = parse(input_file);
   if (absyn_root == NULL) {
-    fprintf(stderr, "something wrong with parser\n");
-    return 1;
+    fprintf(stderr, "something wrong with parser or file is empty\n");
+    exit(0);
   }
 
   FILE *out = stdout;
   if (print_absyn_tree) {
-    
+
     fprintf(out, "========== Absyn Tree ==========\n");
     pr_exp(out, absyn_root, 0);
     fprintf(out, "\n========== End ==========\n\n");
   }
 
-  
   Esc_findEscape(absyn_root);
 
-  
   F_fragList frags = SEM_transProg(absyn_root);
+  if (EM_anyErrors) {
+    exit(0);
+  }
+  F_fragList string_frags = frags;
 
   if (print_ir_tree) {
 
@@ -130,13 +131,15 @@ int main(int argc, char *argv[]) {
     Tr_printTree(get_exp(absyn_root));
     fprintf(out, "\n========== End ==========\n\n");
   }
-
-  
+  if (print_before_reg_alloc) {
+    for (; string_frags; string_frags = string_frags->tail)
+      if (string_frags->head->kind == F_stringFrag)
+        fprintf(out, "%s: %s\n\n", Temp_labelstring(Temp_newlabel()),
+                string_frags->head->u.stringg.str);
+  }
   for (; frags; frags = frags->tail)
     if (frags->head->kind == F_procFrag)
       do_proc(out, frags->head->u.proc.frame, frags->head->u.proc.body);
-  // else if (frags->head->kind == F_stringFrag)
-  //   fprintf(out, "%s\n", frags->head->u.stringg.str);
   fclose(out);
 
   return 0;
