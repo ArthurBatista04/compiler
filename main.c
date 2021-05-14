@@ -49,8 +49,6 @@ void help_menu(const char *prog_name) {
       "tree\n");
   printf("    -s               prints the generated assembly code before regs "
          "allocation\n");
-  printf("    -S               prints the generated assembly code after regs "
-         "allocation\n");
   printf(
       "    -o               sets the name of the output binary               "
       "       \n");
@@ -92,7 +90,7 @@ int main(int argc, char *argv[]) {
       break;
 
     case 'h':
-      input_file ? help_menu(input_file) : help_menu("./tigerc");
+      input_file ? help_menu(input_file) : help_menu("./tc");
       exit(EXIT_SUCCESS);
       break;
 
@@ -132,14 +130,19 @@ int main(int argc, char *argv[]) {
     fprintf(out, "\n========== End ==========\n\n");
   }
   if (print_before_reg_alloc) {
+    fprintf(out, "========== STRING LABELS ==========\n");
     for (; string_frags; string_frags = string_frags->tail)
       if (string_frags->head->kind == F_stringFrag)
         fprintf(out, "%s: %s\n\n", Temp_labelstring(Temp_newlabel()),
                 string_frags->head->u.stringg.str);
+    fprintf(out, "========== END STRING LABELS ==========\n");
   }
-  for (; frags; frags = frags->tail)
-    if (frags->head->kind == F_procFrag)
-      do_proc(out, frags->head->u.proc.frame, frags->head->u.proc.body);
+  if (print_before_reg_alloc || print_canon) {
+
+    for (; frags; frags = frags->tail)
+      if (frags->head->kind == F_procFrag)
+        do_proc(out, frags->head->u.proc.frame, frags->head->u.proc.body);
+  }
   fclose(out);
 
   return 0;

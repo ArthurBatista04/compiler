@@ -304,7 +304,7 @@ last entry is for mil=30 case when wd is max */
 
     tqmf[tqmf_ptr] := xin1;
     tqmf_ptr := tqmf_ptr - 1;
-    tqmf[tqmf_ptr] := xin2;
+    
 
     /* scale outputs */
     xl := (xa + xb) >> 15;
