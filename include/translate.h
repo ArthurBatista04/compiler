@@ -60,7 +60,7 @@ Tr_exp Tr_arrayExp(Tr_exp size, Tr_exp init);
 
 Tr_exp Tr_eqExp(A_oper op, Tr_exp left, Tr_exp right);
 Tr_exp Tr_eqStringExp(A_oper op, Tr_exp left, Tr_exp right);
-
+Tr_exp Tr_eqRef(A_oper op, Tr_exp left, Tr_exp right);
 
 void Tr_printTree(Tr_exp e);
 
