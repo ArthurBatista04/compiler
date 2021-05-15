@@ -36,13 +36,12 @@ in
                 if(p3 = p2) then
                     p3 := p3 + 1;
                     p2 := p2 + 1;
-            )
+            );
             if(j = strlen(sub))then
-                flag := 1
+                flag := 1;
                 print("Is substring");
-            p1 := p1 + 1;
 
-    )
+    );
   if(flag = 0) then print("Is not substring");
 
 end

@@ -93,6 +93,7 @@ function cos(rad:int):int = sin(PI / 2 - rad)
 function fft1(n:int, flag:int):int =
 let
 
+  var i := 0
   var k    := 0 
   var xp   := 0
   var xp2  := 0
@@ -112,7 +113,6 @@ let
   var arg  := 0
   var ret  := 0
   var j    := 0
-  var i    := 0
 
 in
 
@@ -180,10 +180,10 @@ in
 	  k := j1;
 	  while (k < j) do
 	    (
-	      j := j - 2;
-	      k := k / 2
+	      j = j - k;
+	      k = k /2;();
 	    );
-	  j := j + 2
+	  j = j + k
 	);
       if (flag = 0)
       then  
@@ -224,10 +224,6 @@ in
   /* inverse fft */
   flag := 1;
   chkerr := fft1(n, flag);
-  print("chkerr: ");
-  printint(chkerr);
+  print("chkerr: ");printint(chkerr);
 
 end
-
-
-
