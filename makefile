@@ -10,7 +10,7 @@ all: tc
 
 
 tc: main.o  $(OBJECTS)
-	cc -o $@ main.o $(OBJECTS)
+	cc -o $@ -g main.o $(OBJECTS)
 
 # objects
 errormsg.o: src/errormsg.c include/errormsg.h include/util.h
