@@ -43,6 +43,17 @@
 
 
 let
+  function shift_right(valor:int, n:int): int =
+    let 
+      var exp := 2
+    in
+      for i := 0 to n do (
+        exp := exp * 2;
+      );
+
+      valor := valor / exp;
+      valor
+    end
 
   type intARRAY = array of int
 
@@ -82,7 +93,7 @@ let
       l:=istack[jstack];
       jstack := jstack-1
     ) else (
-      /* k:=(l+ir) >> 1; */
+      k:=shift_right((l+ir), 1);
       temp:=arr[k];
       arr[k]:=arr[l+1];
       arr[l+1]:=temp;
