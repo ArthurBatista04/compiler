@@ -2,7 +2,6 @@
 #include "../include/escape.h"
 #include "../include/translate.h"
 
-
 typedef struct expty_ {
   Tr_exp exp;
   Ty_ty ty;
@@ -150,94 +149,87 @@ static expty transExp(Tr_level level, S_table venv, S_table tenv, A_exp e) {
     }
   }
   case A_opExp: {
-            A_oper oper = e->u.op.oper;
-            expty left = transExp(level, venv, tenv, e->u.op.left);
-            expty right = transExp(level, venv, tenv, e->u.op.right);
-            Tr_exp translation = Tr_noExp();
+    A_oper oper = e->u.op.oper;
+    expty left = transExp(level, venv, tenv, e->u.op.left);
+    expty right = transExp(level, venv, tenv, e->u.op.right);
+    Tr_exp translation = Tr_noExp();
 
-            switch (oper) {
-                case A_plusOp:
-                case A_minusOp:
-                case A_timesOp:
-                case A_divideOp:
-                    if (left.ty->kind != Ty_int)
-                        EM_error(e->pos, "different type are being compared");
-                    if (right.ty->kind != Ty_int)
-                        EM_error(e->pos, "different type are being compared");
-                    if (left.ty->kind != right.ty->kind) {
-                        EM_error(e->pos, "different type are being compared");
-                    }
-                    Tr_exp tr_exp = Tr_arithExp(oper, left.exp, right.exp);
-                        return expTy(tr_exp, Ty_Int());
-                case A_eqOp:
-                case A_neqOp:
-                    switch (left.ty->kind) {
-                        case Ty_int: {
-                            if (right.ty == left.ty)
-                                translation =
-                                    Tr_eqExp(oper, left.exp, right.exp);
-                            break;
-                        }
-                        case Ty_string: {
-                            if (right.ty == left.ty)
-                                translation =
-                                    Tr_eqStringExp(oper, left.exp, right.exp);
-                            break;
-                        }
-                        case Ty_array: {
-                            if (right.ty->kind != left.ty->kind) {
-                                EM_error(e->u.op.right->pos,
-                                      "%s expression given; expected %s",
-                                      Ty_ToString(right.ty),
-                                      Ty_ToString(left.ty));
-                            }
-                            translation = Tr_eqRef(oper, left.exp, right.exp);
-                            break;
-                        }
-                        case Ty_record: {
-                            if (right.ty->kind != Ty_record &&
-                                right.ty->kind != Ty_nil) {
-                                EM_error(e->u.op.right->pos,
-                                      "%s expression given is not a record "
-                                      "or nil",
-                                      Ty_ToString(right.ty));
-                            }
-                            translation = Tr_eqRef(oper, left.exp, right.exp);
-                            break;
-                        }
-                        default: {
-                            EM_error(e->u.op.right->pos,
-                                  "unexpected %s expression in comparsion",
-                                  Ty_ToString(right.ty));
-                        }
-                    }
-                    return expTy(translation, Ty_Int());
-
-                case A_gtOp:
-                case A_ltOp:
-                case A_leOp:
-                case A_geOp: {
-                    if (right.ty->kind != left.ty->kind) {
-                        EM_error(e->pos, "integer required in binary comparasion");
-                    }
-                    switch (left.ty->kind) {
-                        case Ty_int:
-                            translation = Tr_relExp(oper, left.exp, right.exp);
-                            break;
-                        case Ty_string:
-                            translation = Tr_noExp();
-                            break;
-                        default: {
-                            EM_error(e->u.op.right->pos,
-                                  "unexpected type %s in comparison",
-                                  Ty_ToString(right.ty));
-                            translation = Tr_noExp();
-                        }
-                    }
-                    return expTy(translation, Ty_Int());
-                }
-            }
+    switch (oper) {
+    case A_plusOp:
+    case A_minusOp:
+    case A_timesOp:
+    case A_divideOp:
+      if (left.ty->kind != Ty_int)
+        EM_error(e->pos, "different type are being compared");
+      if (right.ty->kind != Ty_int)
+        EM_error(e->pos, "different type are being compared");
+      if (left.ty->kind != right.ty->kind) {
+        EM_error(e->pos, "different type are being compared");
+      }
+      Tr_exp tr_exp = Tr_arithExp(oper, left.exp, right.exp);
+      return expTy(tr_exp, Ty_Int());
+    case A_eqOp:
+    case A_neqOp:
+      switch (left.ty->kind) {
+      case Ty_int: {
+        if (right.ty == left.ty)
+          translation = Tr_eqExp(oper, left.exp, right.exp);
+        break;
+      }
+      case Ty_string: {
+        if (right.ty == left.ty)
+          translation = Tr_eqStringExp(oper, left.exp, right.exp);
+        break;
+      }
+      case Ty_array: {
+        if (right.ty->kind != left.ty->kind) {
+          EM_error(e->u.op.right->pos, "%s expression given; expected %s",
+                   Ty_ToString(right.ty), Ty_ToString(left.ty));
         }
+        translation = Tr_eqRef(oper, left.exp, right.exp);
+        break;
+      }
+      case Ty_record: {
+        if (right.ty->kind != Ty_record && right.ty->kind != Ty_nil) {
+          EM_error(e->u.op.right->pos,
+                   "%s expression given is not a record "
+                   "or nil",
+                   Ty_ToString(right.ty));
+        }
+        translation = Tr_eqRef(oper, left.exp, right.exp);
+        break;
+      }
+      default: {
+        EM_error(e->u.op.right->pos, "unexpected %s expression in comparsion",
+                 Ty_ToString(right.ty));
+      }
+      }
+      return expTy(translation, Ty_Int());
+
+    case A_gtOp:
+    case A_ltOp:
+    case A_leOp:
+    case A_geOp: {
+      if (right.ty->kind != left.ty->kind) {
+        EM_error(e->pos, "integer required in binary comparasion");
+      }
+      switch (left.ty->kind) {
+      case Ty_int:
+        translation = Tr_relExp(oper, left.exp, right.exp);
+        break;
+      case Ty_string:
+        translation = Tr_noExp();
+        break;
+      default: {
+        EM_error(e->u.op.right->pos, "unexpected type %s in comparison",
+                 Ty_ToString(right.ty));
+        translation = Tr_noExp();
+      }
+      }
+      return expTy(translation, Ty_Int());
+    }
+    }
+  }
   case A_recordExp: {
     Ty_ty record_typ = S_look(tenv, e->u.record.typ);
     if (!record_typ) {
@@ -441,14 +433,14 @@ static Tr_exp transDec(Tr_level level, S_table venv, S_table tenv, A_dec d) {
       }
     }
     Tr_access m_access = Tr_allocLocal(level, d->u.var.escape);
-            E_enventry eentry = E_VarEntry(m_access, init_exp.ty);
+    E_enventry eentry = E_VarEntry(m_access, init_exp.ty);
 
-            if (d->u.var.typ != NULL) {
-                S_enter(venv, d->u.var.var, E_VarEntry(m_access, dec_ty));
-            } else {
-                S_enter(venv, d->u.var.var, eentry);
-            }
-            return Tr_assignExp(Tr_simpleVar(m_access, level), init_exp.exp);
+    if (d->u.var.typ != NULL) {
+      S_enter(venv, d->u.var.var, E_VarEntry(m_access, dec_ty));
+    } else {
+      S_enter(venv, d->u.var.var, eentry);
+    }
+    return Tr_assignExp(Tr_simpleVar(m_access, level), init_exp.exp);
   }
   case A_typeDec: {
     A_nametyList type_list = NULL;
